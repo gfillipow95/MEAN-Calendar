@@ -33,6 +33,7 @@
 .month{
    width: 100%;
    border-collapse: collapse;
+   table-layout: fixed;
 }
 
 .month th{
