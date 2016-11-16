@@ -21,6 +21,26 @@ function createMonthTable(){
    }
 };
 
+/*function createWeekTable(){
+   document.querySelector("#calendar").innerHTML = "";
+   document.querySelector("#calendar").classList = "";
+   document.querySelector("#calendar").classList.add("week");
+   var curDate = new Date();
+   var tbl = document.querySelector(".week");
+   for(var i=0; i<25; i++){
+      var tr = tbl.insertRow(i);
+      for(var j=0; j<8; j++){
+         if(i===0 && j===0){
+            tr.insertCell(j).outerHTML = "<th>Time</th>";
+         }else if (i===0) {
+            tr.insertCell(j).outerHTML = "<th>"+daysOfWeek[j]+"</th>";
+         }else{
+            tr.insertCell(j);
+         }
+      }
+   }
+}*/
+
 function populateMonth(){
    var newDate = new Date(year, month+1, 0);
    var days = newDate.getDate();
@@ -44,6 +64,7 @@ populateMonth();
 
 var next = document.querySelector("#nextBtn");
 var prev = document.querySelector("#prevBtn");
+var monthBtn = document.querySelector("#monthlyView");
 
 next.addEventListener("click", function(e){
    month = month + 1;
@@ -56,3 +77,11 @@ prev.addEventListener("click", function(e){
    createMonthTable();
    populateMonth();
 })
+
+monthBtn.addEventListener("click", function(e){
+   date = new Date();
+   month = date.getMonth();
+   year = date.getFullYear();
+   createMonthTable();
+   populateMonth();
+});
