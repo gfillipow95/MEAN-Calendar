@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+   <head>
+      <title>Portal Calendar</title>
+      <link rel="stylesheet" href="css/main.css">
+   </head>
+   <body>
+      <div id="table-background">
+         <div id="header">
+            <h1 class="calendarHeader text-center"></h1>
+            <div>
+               <button type="button" id="prevBtn" class="pastNextBtn text-center"><</button>
+               <button type="button" id="nextBtn" class="pastNextBtn text-center">></button>
+            </div>
+            <div class="btn-grp text-center">
+               <button type="button" id="dailytView" class="viewBtn">Daily</button>
+               <button type="button" id="weeklyView" class="viewBtn">Weekly</button>
+               <button type="button" id="monthlyView" class="viewBtn">Monthly</button>
+            </div>
+         </div>
+         <table id="calendar">
+            <!--<tr>
+               <th>Sunday</th>
+               <th>Monday</th>
+               <th>Tuesday</th>
+               <th>Wednesday</th>
+               <th>Thursday</th>
+               <th>Friday</th>
+               <th>Saturday</th>
+            </tr>
+            <tr>
+               <td></td>
+               <td></td>
+               <td id="eventMonthTemp"></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+            </tr>-->
+         </table>
+         <!-- Right Drawer -->
+         <div id="rightDrawer" class="hide">
+            <button type="button" id="deleteWindow">X</button>
+            <h4 id="drawerDate" class="text-center">Monday November 1, 2016</h4>
+            <div class="event1 text-center">
+               <h4>Portal Training</h4>
+               <p>12pm - 1pm</p>
+            </div>
+            <div class="event2 text-center">
+               <h4>Group Project Meeting</h4>
+               <p>4pm - 6pm</p>
+            </div>
+         </div>
+      </div>
+      <button type="button" id="addEventButton">+</button>
+
+      <!-- ///////////////////////////////////////// -->
+      <!-- Edit Menu -->
+      <div id="editMenu" class="hide">
+         <form>
+            <div>
+               <h3 class="text-center">Add Event</h3>
+               Title:<br>
+               <input type="text">
+            </div>
+            <div>
+               Date:<br>
+               <input type="date">
+            </div>
+            <div class="eventTimes">
+               <div>
+                  Start Time:<br>
+                  <input type="time">
+               </div>
+               <div>
+                  End Time:<br>
+                  <input type="time">
+               </div>
+            </div>
+            <div>
+               Event Color:<br>
+               <input id="gray" type="button" class="btn btn-default">
+               <input id="darkGreen" type="button" class="btn btn-default">
+               <input id="turqoise" type="button" class="btn btn-default">
+               <input id="blue" type="button" class="btn btn-default">
+               <input id="purple" type="button" class="btn btn-default">
+               <input id="lightPurple" type="button" class="btn btn-default">
+               <input id="lightBlue" type="button" class="btn btn-default">
+               <input id="red" type="button" class="btn btn-default">
+               <input id="orange" type="button" class="btn btn-default">
+               <input id="lightOrange" type="button" class="btn btn-default">
+               <input id="yellow" type="button" class="btn btn-default">
+            </div>
+            <div id="repeat">
+               Repeat:<br>
+               <input type="radio" value="None" checked>None
+               <input type="radio" value="Weekly">Weekly
+               <input type="radio" value="Monthly">Monthly<br>
+
+               <input type="radio" value="Sun">Sun
+               <input type="radio" value="Mon">Mon
+               <input type="radio" value="Tue">Tue
+               <input type="radio" value="Wed">Wed
+               <input type="radio" value="Thurs">Thurs
+               <input type="radio" value="Fri">Fri
+               <input type="radio" value="Sat">Sat<br>
+            </div>
+            <button type="button" class="createEvent">Create Event</button>
+         </form>
+      </div>
+      <!-- //////////////////////////////////////////// -->
+   </body>
+   <script src="js/populateCalendar.js"></script>
+   <script src="js/calendar.js"></script>
+</html>

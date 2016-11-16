@@ -1,0 +1,234 @@
+
+
+.pastNextBtn{
+   background-color: #1a8cff;
+   border: none;
+   padding: 10px 15px;
+   color: white;
+   text-align: center;
+   text-decoration: none;
+   border-radius: 50%;
+   cursor: pointer;
+   transition-duration: .4s;
+}
+
+.pastNextBtn:hover{
+   background-color: #b3d9ff;
+   color: black;
+}
+
+#nextBtn{
+   float: right;
+}
+
+
+/*Set font-family and weight of calendar titles*/
+.calendarHeader {
+   font-family: 'HelveticaNeue-Light', Helvetica Neue, Helvetica;
+   font-weight: bold;
+}
+
+/*Give heigh of cells in month view 100px*/
+
+.month{
+   width: 100%;
+   border-collapse: collapse;
+}
+
+.month th{
+   background-color: #00ff80;
+}
+
+.month tr td{
+   border: 1px solid black;
+   height: 100px;
+   vertical-align: top;
+}
+
+.week{
+   width: 100%;
+   border-collapse: collapse;;
+}
+
+.week th{
+   background-color: #00ff80;
+}
+
+.week tr td{
+   border: 1px solid black;
+}
+
+
+/*Set the font-family and center the days of the week*/
+th{
+   font-family: 'HelveticaNeue-Light', Helvetica Neue, Helvetica;
+   text-align: center;
+}
+
+/*Set the time column width in the daily view to 5% of the table's width*/
+#dailyViewTime{
+   width: 5%;
+}
+
+/*Fake event in the month view.
+A simple black dot to represent an event.*/
+#eventMonth{
+   background-color: black;
+   position: relative;
+   top: 60%;
+   height: 20%;
+}
+
+/*Fake event color for the weekly and daily view*/
+.event1{
+   background-color: #ff9999;
+}
+
+/*Fake event color for the weekly and daily view*/
+.event2{
+   background-color: #99e6ff;
+}
+
+.viewBtn{
+   background-color: #1a8cff;
+   color: white;
+   padding: 10px 25px;
+   font-size: 16px;
+   border: none;
+   cursor: pointer;
+   transition-duration: 0.4s;
+}
+
+.viewBtn:hover{
+   background-color: #b3d9ff;
+   color: black;
+}
+
+/*Circle button with "+" to add an event in any view*/
+#addEventButton{
+   background-color: #1a8cff;
+   color: white;
+   height: 60px;
+   width: 60px;
+   border-radius: 100%;
+   position: fixed;
+   bottom: 10px;
+   right: 10px;
+   border: none;
+   transition-duration: 0.4s;
+   box-shadow: 5px 5px 25px black;
+   cursor: pointer;
+}
+
+#addEventButton:hover{
+   background-color: #b3d9ff;
+   color: black;
+}
+
+#deleteWindow{
+   background-color: #ff3300;
+   border-radius: 100%;
+   position: relative;
+}
+
+.hide{
+   display: none;
+}
+
+.transition{
+   transition: all 1s ease;
+}
+
+.opacity{
+   opacity: 0.4;
+}
+
+.text-center{
+   text-align: center;
+}
+
+/*Just setting up the edit menu view*/
+#editMenu{
+   width: 25%;
+   background-color: #99ddff;
+   position: fixed;
+   top: 25%;
+   left: 40%;
+   box-shadow: 5px 5px 25px black;
+}
+
+/*Setting up the right drawer view*/
+#rightDrawer{
+   background-color: #e0e2e5;
+   height: 100%;
+   width: 25%;
+   position: fixed;
+   right: 0;
+   top: 0;
+}
+
+/*unerline the date in the right drawer view*/
+#drawerDate{
+   text-decoration: underline;
+}
+
+/*Set up color and font color of create event button in the edit menu*/
+.createEvent{
+   background-color: #1a8cff;
+   color: white;
+   border: 1px solid black;
+   cursor: pointer;
+}
+
+/*Set the inputs for start and end dates inline*/
+.eventTimes div{
+   display: inline-block;
+}
+
+/********************/
+/*Color Event Picker*/
+/********************/
+
+#gray{
+   background-color: #bfbfbf;
+}
+
+#darkGreen{
+   background-color: #00b300;
+}
+
+#turqoise{
+   background-color: #80ffaa;
+}
+
+#blue{
+   background-color: #0066ff;
+}
+
+#purple{
+   background-color: #db4dff;
+}
+
+#lightPurple{
+   background-color: #9999ff;
+}
+
+#lightBlue{
+   background-color: #4ddbff;
+}
+
+#red{
+   background-color: #ff0066;
+}
+
+#orange{
+   background-color: #ff8533;
+}
+
+#lightOrange{
+   background-color: #ffbb99;
+}
+
+#yellow{
+   background-color: #e6e600;
+}
