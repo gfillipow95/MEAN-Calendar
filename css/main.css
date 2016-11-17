@@ -61,6 +61,21 @@
    height: 25px;
 }
 
+.day{
+   width: 100%;
+   border-collapse: collapse;
+   table-layout: fixed;
+}
+
+.day th{
+   background-color: #00ff80;
+}
+
+.day tr td{
+   border: 1px solid black;
+   height: 25px;
+}
+
 
 /*Set the font-family and center the days of the week*/
 th{

@@ -42,6 +42,41 @@ function createWeekTable(){
    }
 };
 
+function createDayTable(){
+   document.querySelector("#calendar").innerHTML = "";
+   document.querySelector("#calendar").classList = "";
+   document.querySelector("#calendar").classList.add("day");
+   var tbl = document.querySelector(".day");
+   for(var i=0; i<25; i++){
+      var tr = tbl.insertRow(i);
+      for(var j=0; j<2; j++){
+         if(i===0 && j===0){
+            tr.insertCell(j).outerHTML = "<th>Time</th>";
+         }else if(i===0 && j===1){
+            tr.insertCell(j).outerHTML = "<th colspan='9'>" + daysOfWeek[date.getDay()] + "</th>";
+         }else if(i>0 && j===1){
+            tr.insertCell(j).outerHTML = "<td colspan='9'></td>";
+         }else{
+            tr.insertCell(j);
+         }
+      }
+   }
+}
+
+function populateDay(){
+   var calendar = document.querySelector(".day");
+   document.querySelector(".calendarHeader").innerHTML=(months[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear());
+   for(var i=0; i<25; i++){
+      for(var j=0; j<2; j++){
+         if(i===0 && j===1){
+            calendar.rows[i].cells[j].innerHTML += ((date.getMonth() + 1) + "/" + (date.getDate()));
+         }else if(i>0 && j===0){
+            calendar.rows[i].cells[j].innerHTML = times[i-1];
+         }
+      }
+   }
+}
+
 function populateWeek(){
    var calendar=document.querySelector(".week");
    date.setDate(date.getDate()-date.getDay());
@@ -88,6 +123,7 @@ var next = document.querySelector("#nextBtn");
 var prev = document.querySelector("#prevBtn");
 var monthBtn = document.querySelector("#monthlyView");
 var weekBtn = document.querySelector("#weeklyView");
+var dayBtn = document.querySelector("#dailyView");
 
 
 next.addEventListener("click", function(e){
@@ -99,6 +135,10 @@ next.addEventListener("click", function(e){
       date.setDate((date.getDate()-date.getDay() + 7));
       createWeekTable();
       populateWeek();
+   }else if(document.querySelector("#calendar").classList.contains("day")){
+      date.setDate(date.getDate() + 1);
+      createDayTable();
+      populateDay();
    }
 });
 
@@ -111,6 +151,10 @@ prev.addEventListener("click", function(e){
       date.setDate(date.getDate() - 14);
       createWeekTable();
       populateWeek();
+   }else if(document.querySelector("#calendar").classList.contains("day")){
+      date.setDate(date.getDate() - 1);
+      createDayTable();
+      populateDay();
    }
 })
 
@@ -129,3 +173,11 @@ weekBtn.addEventListener("click", function(e){
    createWeekTable();
    populateWeek();
 });
+
+dayBtn.addEventListener("click", function(e){
+   date = new Date();
+   month = date.getMonth();
+   year = date.getFullYear();
+   createDayTable();
+   populateDay();
+})
