@@ -1,6 +1,9 @@
 var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var weekAndDayView = ["Time", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var monthAbv = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+var times = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm",
+               "7pm", "8pm", "9pm", "10pm", "11pm"];
 var date = new Date();
 var month = date.getMonth();
 var year = date.getFullYear();
@@ -26,7 +29,6 @@ function createWeekTable(){
    document.querySelector("#calendar").innerHTML = "";
    document.querySelector("#calendar").classList = "";
    document.querySelector("#calendar").classList.add("week");
-   var curDate = new Date();
    var tbl = document.querySelector(".week");
    for(var i=0; i<25; i++){
       var tr = tbl.insertRow(i);
@@ -35,6 +37,21 @@ function createWeekTable(){
             tr.insertCell(j).outerHTML = "<th>"+weekAndDayView[j]+"</th>";
          }else{
             tr.insertCell(j);
+         }
+      }
+   }
+}
+
+function populateWeek(){
+   var calendar=document.querySelector(".week");
+   document.querySelector(".calendarHeader").innerHTML=(monthAbv[date.getMonth()]) + " " + (date.getDate()-date.getDay()) +" - " +
+                           monthAbv[date.getMonth()] + " " + (date.getDate()-date.getDay()+6);
+   for(var i=0; i<25; i++){
+      for(var j=0; j<8; j++){
+         if(i===0 && j!==0){
+            calendar.rows[i].cells[j].innerHTML += (date.getMonth()+1) + "/" + ((date.getDate()-date.getDay())+(j-1));
+         }else if(i>0 && j===0){
+            calendar.rows[i].cells[j].innerHTML = times[i-1];
          }
       }
    }
@@ -71,15 +88,27 @@ var weekBtn = document.querySelector("#weeklyView");
 
 
 next.addEventListener("click", function(e){
-   month = month + 1;
-   createMonthTable();
-   populateMonth();
+   if(document.querySelector("#calendar").classList.contains("month")){
+      month = month + 1;
+      createMonthTable();
+      populateMonth();
+   }else if(document.querySelector("#calendar").classList.contains("week")){
+      date.setDate((date.getDate()-date.getDay() + 7));
+      createWeekTable();
+      populateWeek();
+   }
 });
 
 prev.addEventListener("click", function(e){
-   month = month - 1;
-   createMonthTable();
-   populateMonth();
+   if(document.querySelector("#calendar").classList.contains("month")){
+      month = month - 1;
+      createMonthTable();
+      populateMonth();
+   }else if(document.querySelector("#calendar").classList.contains("week")){
+      date.setDate((date.getDate()-date.getDay() - 7));
+      createWeekTable();
+      populateWeek();
+   }
 })
 
 monthBtn.addEventListener("click", function(e){
@@ -95,4 +124,5 @@ weekBtn.addEventListener("click", function(e){
    month = date.getMonth();
    year = date.getFullYear();
    createWeekTable();
+   populateWeek();
 });
