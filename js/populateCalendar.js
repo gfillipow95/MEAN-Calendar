@@ -106,7 +106,7 @@ function populateMonth(){
    for(var i = 1; i < 7; i++){
       for(var j = 0; j < 7; j++){
          if(count <= days && (j >= startDate || i > 1)){
-            calendar.rows[i].cells[j].innerHTML = count;
+            calendar.rows[i].cells[j].outerHTML = "<td data-date=" + year + "-" + (month+1) + "-" + count + ">" + count + "</td>";
             count++;
          }
       }

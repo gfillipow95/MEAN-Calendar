@@ -30,7 +30,7 @@
             <tr>
                <td></td>
                <td></td>
-               <td id="eventMonthTemp"></td>
+               <td id="eventMonthTemp"><div></div></td>
                <td></td>
                <td></td>
                <td></td>
@@ -96,35 +96,35 @@
             <div>
                <h3 class="text-center">Add Event</h3>
                Title:<br>
-               <input type="text">
+               <input type="text" id="eventTitle">
             </div>
             <div>
                Date:<br>
-               <input type="date">
+               <input type="date" id="eventDate">
             </div>
             <div class="eventTimes">
                <div>
                   Start Time:<br>
-                  <input type="time">
+                  <input type="time" id="eventStartTime">
                </div>
                <div>
                   End Time:<br>
-                  <input type="time">
+                  <input type="time" id="eventEndTime">
                </div>
             </div>
             <div>
                Event Color:<br>
-               <input id="gray" type="button" class="btn btn-default">
-               <input id="darkGreen" type="button" class="btn btn-default">
-               <input id="turqoise" type="button" class="btn btn-default">
-               <input id="blue" type="button" class="btn btn-default">
-               <input id="purple" type="button" class="btn btn-default">
-               <input id="lightPurple" type="button" class="btn btn-default">
-               <input id="lightBlue" type="button" class="btn btn-default">
-               <input id="red" type="button" class="btn btn-default">
-               <input id="orange" type="button" class="btn btn-default">
-               <input id="lightOrange" type="button" class="btn btn-default">
-               <input id="yellow" type="button" class="btn btn-default">
+               <input id="gray" type="button" class="colorBtn" name="gray">
+               <input id="darkGreen" type="button" class="colorBtn" name="darkGreen">
+               <input id="turqoise" type="button" class="colorBtn" name="turqoise">
+               <input id="blue" type="button" class="colorBtn" name="blue">
+               <input id="purple" type="button" class="colorBtn" name="purple">
+               <input id="lightPurple" type="button" class="colorBtn" name="lightPurple">
+               <input id="lightBlue" type="button" class="colorBtn" name="lightBlue">
+               <input id="red" type="button" class="colorBtn" name="red">
+               <input id="orange" type="button" class="colorBtn" name="orange">
+               <input id="lightOrange" type="button" class="colorBtn" name="lightOrange">
+               <input id="yellow" type="button" class="colorBtn" name="yellow">
             </div>
             <div id="repeat">
                Repeat:<br>
@@ -140,7 +140,7 @@
                <input type="radio" value="Fri">Fri
                <input type="radio" value="Sat">Sat<br>
             </div>
-            <button type="button" class="createEvent">Create Event</button>
+            <button type="button" class="createEvent" id="addEventBtn">Create Event</button>
          </form>
       </div>
       <!-- //////////////////////////////////////////// -->
