@@ -40,27 +40,25 @@ function createWeekTable(){
          }
       }
    }
-}
+};
 
 function populateWeek(){
    var calendar=document.querySelector(".week");
-   document.querySelector(".calendarHeader").innerHTML=(monthAbv[date.getMonth()]) + " " + (date.getDate()-date.getDay()) +" - " +
-                           monthAbv[date.getMonth()] + " " + (date.getDate()-date.getDay()+6);
+   date.setDate(date.getDate()-date.getDay());
+   document.querySelector(".calendarHeader").innerHTML=(monthAbv[date.getMonth()]) + " " + (date.getDate()-date.getDay());
    for(var i=0; i<25; i++){
       for(var j=0; j<8; j++){
          if(i===0 && j!==0){
-            /*if((date.getDate()-date.getDay())+(j-1) > date.getDate()){
-               date.setMonth(month+1);
-               calendar.rows[i].cells[j].innerHTML += (date.getMonth()+1) + "/" + ((date.getDate()-date.getDay())+(j-1));
-            }else{*/
-               calendar.rows[i].cells[j].innerHTML += (date.getMonth()+1) + "/" + ((date.getDate()-date.getDay())+(j-1));
-            //}
+            calendar.rows[i].cells[j].innerHTML += (date.getMonth()+1) + "/" + (date.getDate());
+            date.setDate(date.getDate() + 1);
          }else if(i>0 && j===0){
             calendar.rows[i].cells[j].innerHTML = times[i-1];
          }
       }
    }
-}
+   document.querySelector(".calendarHeader").innerHTML += " - " + monthAbv[date.getMonth()] + " " + (date.getDate()-1);
+};
+
 
 function populateMonth(){
    var newDate = new Date(year, month+1, 0);
@@ -110,7 +108,7 @@ prev.addEventListener("click", function(e){
       createMonthTable();
       populateMonth();
    }else if(document.querySelector("#calendar").classList.contains("week")){
-      date.setDate((date.getDate()-date.getDay() - 7));
+      date.setDate(date.getDate() - 14);
       createWeekTable();
       populateWeek();
    }
