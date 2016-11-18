@@ -16,15 +16,11 @@ function addMonthEvent(){
    var calendar = document.querySelector(".month");
    var newDate;
    for (var i=0; i<eventList.length; i++){
-      if(eventList[i].eventDate[8] === "0"){
-         newDate = eventList[i].eventDate.slice(0, 8) + eventList[i].eventDate.slice(9);
-      }else{
-         newDate = eventList[i].eventDate;
-      }
+      newDate = new Date(eventList[i].eventDate);
       for(var r=0; r<7; r++){
          for(var c=0; c<7; c++){
-            if(newDate === calendar.rows[r].cells[c].getAttribute("data-date")){
-               calendar.rows[r].cells[c].innerHTML += "<div id='eventMonth'></div>";
+            if(newDate.toLocaleDateString() === calendar.rows[r].cells[c].getAttribute("data-date")){
+               calendar.rows[r].cells[c].style.background = "yellow";
             }
          }
       }

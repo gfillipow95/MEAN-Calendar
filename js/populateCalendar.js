@@ -106,7 +106,8 @@ function populateMonth(){
    for(var i = 1; i < 7; i++){
       for(var j = 0; j < 7; j++){
          if(count <= days && (j >= startDate || i > 1)){
-            calendar.rows[i].cells[j].outerHTML = "<td data-date=" + year + "-" + (month+1) + "-" + count + ">" + count + "</td>";
+            calendar.rows[i].cells[j].outerHTML = "<td data-date=" + (firstDayMonth.getMonth()+1) + "/" + count + "/" +
+                                                      firstDayMonth.getFullYear() + ">" + count + "</td>";
             count++;
          }
       }
@@ -131,6 +132,7 @@ next.addEventListener("click", function(e){
       month = month + 1;
       createMonthTable();
       populateMonth();
+      addMonthEvent();
    }else if(document.querySelector("#calendar").classList.contains("week")){
       date.setDate((date.getDate()-date.getDay() + 7));
       createWeekTable();
@@ -147,6 +149,7 @@ prev.addEventListener("click", function(e){
       month = month - 1;
       createMonthTable();
       populateMonth();
+      addMonthEvent();
    }else if(document.querySelector("#calendar").classList.contains("week")){
       date.setDate(date.getDate() - 14);
       createWeekTable();
@@ -164,6 +167,7 @@ monthBtn.addEventListener("click", function(e){
    year = date.getFullYear();
    createMonthTable();
    populateMonth();
+   addMonthEvent();
 });
 
 weekBtn.addEventListener("click", function(e){
