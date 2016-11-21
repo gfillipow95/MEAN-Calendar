@@ -108,11 +108,21 @@ function populateMonth(){
          if(count <= days && (j >= startDate || i > 1)){
             calendar.rows[i].cells[j].outerHTML = "<td data-date=" + (firstDayMonth.getMonth()+1) + "/" + count + "/" +
                                                       firstDayMonth.getFullYear() + ">" + count + "</td>";
+            calendar.rows[i].cells[j].setAttribute("class", "monthDays");
             count++;
          }
       }
    }
 };
+
+function createRightDrawer(dateArray/*11/12/2016 --> ["11", "13", "2016"]*/){
+   var rd = document.querySelector("#rightDrawer");
+   var drawerHeader = document.querySelector("#drawerDate");
+   var selectedDay = new Date(dateArray[2], dateArray[0]-1, dateArray[1]);
+   var dateString = daysOfWeek[selectedDay.getDay()] + " " + months[selectedDay.getMonth()] + " " + dateArray[1] + ", " + dateArray[2];
+
+   drawerHeader.innerHTML = dateString;
+}
 
 //Initial Calendar Creation
 ////////////////////////////////////////////////////

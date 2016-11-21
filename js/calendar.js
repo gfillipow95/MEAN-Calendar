@@ -1,7 +1,7 @@
 var btn=document.querySelector("#addEventButton");
 var calendar=document.querySelector("#table-background");
-var deleteWin=document.querySelector("#deleteWindow");
 var addCalendarEvent = document.querySelector("#addEventBtn");
+var rightDrawer = document.querySelector("#rightDrawer");
 
 var title = document.querySelector("#eventTitle");
 var date = document.querySelector("#eventDate");
@@ -11,6 +11,8 @@ var ecolorBtn = document.querySelectorAll(".colorBtn");
 var eColorID;
 var eventList = [];
 var event = {};
+
+
 
 function addMonthEvent(){
    var calendar = document.querySelector(".month");
@@ -44,16 +46,30 @@ addCalendarEvent.addEventListener("click", function(e){
    calendar.classList.remove("opacity");
 });
 
+
+
 btn.addEventListener("click", function(e){
    document.querySelector("#editMenu").classList.remove("hide");
-   calendar.classList.add("opacity");
+   document.querySelector("#calendar").classList.add("opacity");
 });
 
 calendar.addEventListener("click", function(e){
-   document.querySelector("#editMenu").classList.add("hide");
-   calendar.classList.remove("opacity");
+   if(document.querySelector("#calendar").classList.contains("month")){
+      if(document.querySelector("#calendar").classList.contains("opacity")){
+         document.querySelector("#editMenu").classList.add("hide");
+         document.querySelector("#calendar").classList.remove("opacity");
+      }else{
+         var selectMonthDay = document.querySelectorAll(".monthDays");
+         for(var i=0; i<selectMonthDay.length; i++){
+            selectMonthDay[i].addEventListener("click", function(e){
+               createRightDrawer(e.target.getAttribute("data-date").split("/"));
+               rightDrawer.classList.remove("hide");
+            })
+         }
+      }
+   }
 });
 
-deleteWin.addEventListener("click", function(e){
-   document.querySelector("#rightDrawer").classList.add("hide");
+document.querySelector("#deleteWindow").addEventListener("click", function(e){
+   rightDrawer.classList.add("hide");
 });
