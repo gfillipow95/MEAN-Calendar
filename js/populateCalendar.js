@@ -7,6 +7,8 @@ var times = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9a
 var date = new Date();
 var month = date.getMonth();
 var year = date.getFullYear();
+var eventList = [];
+var event = {};
 
 function createMonthTable(){
    document.querySelector("#calendar").innerHTML = "";
@@ -21,7 +23,7 @@ function createMonthTable(){
          }else{
             tr.insertCell(j);
          }
-      }
+      }//if Loop not equal to correct month then break out
    }
 };
 
@@ -120,8 +122,14 @@ function createRightDrawer(dateArray/*11/12/2016 --> ["11", "13", "2016"]*/){
    var drawerHeader = document.querySelector("#drawerDate");
    var selectedDay = new Date(dateArray[2], dateArray[0]-1, dateArray[1]);
    var dateString = daysOfWeek[selectedDay.getDay()] + " " + months[selectedDay.getMonth()] + " " + dateArray[1] + ", " + dateArray[2];
-
    drawerHeader.innerHTML = dateString;
+   eventList.forEach(function(e){
+      drawerDate = new Date(e.eventDate);
+      drawerDate.setDate(drawerDate.getDate()+1);
+      if(drawerDate.toLocaleDateString() === selectedDay.toLocaleDateString()){
+         console.log("date Matched!");
+      }
+   });
 }
 
 //Initial Calendar Creation
