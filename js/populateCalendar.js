@@ -8,7 +8,10 @@ var date = new Date();
 var month = date.getMonth();
 var year = date.getFullYear();
 var eventList = [];
-var event = {};
+var event ={};
+
+var testDateFormat = new Intl.DateTimeFormat('en-US', {month: '2-digit', weekday: "long", month: 'short'});
+//console.log(testDateFormat.format(date))
 
 function createMonthTable(){
    document.querySelector("#calendar").innerHTML = "";
@@ -23,7 +26,7 @@ function createMonthTable(){
          }else{
             tr.insertCell(j);
          }
-      }//if Loop not equal to correct month then break out
+      }
    }
 };
 
@@ -122,14 +125,23 @@ function createRightDrawer(dateArray/*11/12/2016 --> ["11", "13", "2016"]*/){
    var drawerHeader = document.querySelector("#drawerDate");
    var selectedDay = new Date(dateArray[2], dateArray[0]-1, dateArray[1]);
    var dateString = daysOfWeek[selectedDay.getDay()] + " " + months[selectedDay.getMonth()] + " " + dateArray[1] + ", " + dateArray[2];
+   let drwrEvnts = document.querySelector("#drawerEvents");
    drawerHeader.innerHTML = dateString;
-   eventList.forEach(function(e){
-      drawerDate = new Date(e.eventDate);
-      drawerDate.setDate(drawerDate.getDate()+1);
-      if(drawerDate.toLocaleDateString() === selectedDay.toLocaleDateString()){
-         console.log("date Matched!");
-      }
-   });
+   if(eventList.length > 0){
+      drwrEvnts.innerHTML = "";
+      eventList.forEach(function(e){
+         drawerDate = new Date(e.eventDate);
+         drawerDate.setDate(drawerDate.getDate()+1);
+         var eventDiv = "<div id=e" + e.eventID +">";
+         let eventName = "<h4 class=text-center>" + e.eventTitle + "</h4>";
+         eventDiv += eventName;
+         let delBtn = "<button class='deleteButton' data-eId=" + e.eventID + ">Delete</button>";
+         eventDiv += delBtn;
+         if(drawerDate.toLocaleDateString() === selectedDay.toLocaleDateString()){
+            drwrEvnts.innerHTML += eventDiv;
+         }
+      });
+   }
 }
 
 //Initial Calendar Creation
