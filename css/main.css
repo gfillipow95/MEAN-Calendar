@@ -27,6 +27,10 @@
    font-weight: bold;
 }
 
+.grayDates{
+   background-color: #d9d9d9;
+}
+
 /*Give heigh of cells in month view 100px*/
 
 .month{
@@ -43,6 +47,10 @@
    border: 1px solid black;
    height: 100px;
    vertical-align: top;
+}
+.month td{
+   font-weight: bold;
+   font-size: 20px;
 }
 
 .week{
