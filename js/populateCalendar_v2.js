@@ -131,6 +131,29 @@ function createRightDrawer(dateArray){
 
 $(document).ready(function(){
    createMonth();
+   $.ajax({
+      method: "GET",
+      url: "http://thiman.me:1337/gen",
+      success: function(eventData){
+         $.each(eventData, function(i, data){
+            $.each(data, function(i, e){
+               events = {
+                  title: e['title'],
+                  date: e['date'],
+                  stime: e['start'],
+                  etime: e['end'],
+                  eventID: e['_id']
+               }
+               if(eventMap[e.date] != undefined){
+                  eventMap[e.date].push(events);
+               }else{
+                  eventMap[e.date] = [events];
+               }
+            })
+            addMonthEvent();
+         })
+      }
+   });
 });
 
 $("#nextBtn").click(function(){
@@ -140,6 +163,7 @@ $("#nextBtn").click(function(){
       addMonthEvent();
    }else if($("#calendar").hasClass("week")){
       createWeek();
+      addWeekEvent();
    }else if($("#calendar").hasClass("day")){
       date.setDate(date.getDate() + 1);
       createDay();
@@ -154,6 +178,7 @@ $("#prevBtn").click(function(){
    }else if($("#calendar").hasClass("week")){
       date.setDate((date.getDate() - 14));
       createWeek();
+      addWeekEvent();
    }else if($("#calendar").hasClass("day")){
       date.setDate(date.getDate() - 1);
       createDay();
@@ -173,6 +198,7 @@ $("#weeklyView").click(function(){
    month = date.getMonth();
    year = date.getFullYear();
    createWeek();
+   addWeekEvent();
 });
 
 $("#dailyView").click(function(){

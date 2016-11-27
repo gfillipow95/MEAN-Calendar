@@ -42,22 +42,37 @@ $("#addEventBtn").click(function(){
    let newDate = new Date(eDate);
    newDate = newDate.setDate(newDate.getDate() + 1);
    newDate = localeFormat.format(newDate);
-   events={
+   let newEvent={
       title: eTitle,
       date: newDate,
-      stime: sTime,
-      etime: eTime
+      start: sTime,
+      end: eTime
    }
-   if(eventMap[newDate] != undefined){
-      eventMap[newDate].push(events);
-   }else{
-      eventMap[newDate] = [events];
-   }
-   if($("#calendar").hasClass("month")){
-      addMonthEvent();
-   }else if($("#calendar").hasClass("week")){
-      addWeekEvent();
-   }
+   $.ajax({
+      method: "POST",
+      url: "http://thiman.me:1337/gen",
+      data: newEvent,
+      success: function(e){
+         let eventData = JSON.parse(JSON.stringify(e))['data'];
+         events = {
+            title: eventData['title'],
+            date: eventData['date'],
+            stime: eventData['start'],
+            etime: eventData['end'],
+            eventID: eventData['_id']
+         }
+         if(eventMap[newDate] != undefined){
+            eventMap[newDate].push(events);
+         }else{
+            eventMap[newDate] = [events];
+         }
+         if($("#calendar").hasClass("month")){
+            addMonthEvent();
+         }else if($("#calendar").hasClass("week")){
+            addWeekEvent();
+         }
+      }
+   });
    $("#eventTitle").val("");
    $("#eventDate").val("");
    $("#eventStartTime").val("");
