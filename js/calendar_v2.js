@@ -92,6 +92,32 @@ $("#table-background").click(function(){
    $("#editMenu").addClass("hide");
    $("#calendar").removeClass("disable");
    $("#table-background").removeClass("opacity");
+
+   if(document.querySelector(".deleteButton") !== null){
+      let idString;
+      $(".deleteButton").click(function(e){
+         $.each(eventMap, function(dateKey, eventList){
+            $.each(eventList, function(i, eventObj){
+               if(e.target.getAttribute("data-eId") == eventObj.eventID){
+                  let eIndex = eventList.indexOf(eventObj);
+                  $.ajax({
+                     method: "DELETE",
+                     url: "http://thiman.me:1337/gen/" + eventObj.eventID,
+                     success: function(data){
+                        eventList.splice(eIndex, 1);
+                        idString = "#e"+eventObj.eventID;
+                        $(idString).remove();
+                        if(eventList.length == 0){
+                           $("[data-date='" + dateKey + "']").css("background-color", "white");
+                           delete eventMap[dateKey];
+                        }
+                     }
+                  });
+               }
+            })
+         })
+      });
+   }
 });
 
 $("#calendar").click(function(e){

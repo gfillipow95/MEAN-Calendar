@@ -127,10 +127,23 @@ function createRightDrawer(dateArray){
    let selectedDay = new Date(dateArray[2], dateArray[0]-1, dateArray[1]);
    let dateString = dayFormat.format(selectedDay) + " " + monthFormat.format(selectedDay) + " " + dateArray[1] + ", " + dateArray[2];
    $("#drawerDate").text(dateString);
+   $("#drawerEvents").empty();
+   $.each(eventMap, function(dateKey, eventList){
+      if(dateKey == localeFormat.format(selectedDay)){
+         $.each(eventList, function(i, eventObj){
+            let eventDiv = "<div id=e" +  eventObj.eventID + ">";
+            let eventName = "<h4 class=text-center>" + eventObj.title + "</h4>";
+            eventDiv += eventName;
+            let delBtn = "<button class='deleteButton' data-eId=" + eventObj.eventID + ">Delete</button>";
+            eventDiv += delBtn;
+            eventDiv += "</div>";
+            $("#drawerEvents").append(eventDiv);
+         })
+      }
+   })
 }
 
 $(document).ready(function(){
-   //Create Initial Mont
    createMonth();
    $.ajax({
       method: "GET",
