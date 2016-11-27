@@ -48,7 +48,7 @@ $("#addEventBtn").click(function(){
       start: sTime,
       end: eTime
    }
-   $.ajax({
+   $.ajax({//Add Event
       method: "POST",
       url: "http://thiman.me:1337/gen",
       data: newEvent,

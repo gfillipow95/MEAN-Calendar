@@ -130,6 +130,7 @@ function createRightDrawer(dateArray){
 }
 
 $(document).ready(function(){
+   //Create Initial Month
    createMonth();
    $.ajax({
       method: "GET",
