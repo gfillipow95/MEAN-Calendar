@@ -195,7 +195,7 @@ A simple black dot to represent an event.*/
    height: 100%;
    width: 25%;
    position: fixed;
-   right: 0;
+   right: -25%;
    top: 0;
 }
 

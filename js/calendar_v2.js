@@ -26,6 +26,9 @@ function addWeekEvent(){
          }
          $.each(calendar, function(index, item){
             if(key == item.getAttribute("data-date") && startHour <= item.getAttribute("data-time") && item.getAttribute("data-time") < endHour){
+               if(startHour == item.getAttribute("data-time")){
+                  $("[data-date='" + key + "'][data-time='" + item.getAttribute("data-time") + "']").text(eventObj.title);
+               }
                $("[data-date='" + key + "'][data-time='" + item.getAttribute("data-time") + "']").css("background-color", "yellow");
             }
          })
@@ -121,10 +124,14 @@ $("#table-background").click(function(){
 });
 
 $("#calendar").click(function(e){
-   createRightDrawer(e.target.getAttribute("data-date").split("/"));
-   $("#rightDrawer").removeClass("hide");
+   if($("#calendar").hasClass("month")){
+      createRightDrawer(e.target.getAttribute("data-date").split("/"));
+      let drawerWidth = $("#rightDrawer").width();
+      $("#rightDrawer").animate({"right": 0}, "fast");
+   }
 });
 
 $("#deleteWindow").click(function(){
-   $("#rightDrawer").addClass("hide");
+   let drawerWidth = $("#rightDrawer").width();
+   $("#rightDrawer").animate({"right": "-25%"}, "fast");
 });

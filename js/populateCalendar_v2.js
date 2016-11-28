@@ -12,6 +12,33 @@ let date = new Date();
 let month = date.getMonth();
 let year = date.getFullYear();
 
+$(document).ready(function(){
+   createMonth();
+   $.ajax({
+      method: "GET",
+      url: "http://thiman.me:1337/gen",
+      success: function(eventData){
+         $.each(eventData, function(i, data){
+            $.each(data, function(i, e){
+               events = {
+                  title: e['title'],
+                  date: e['date'],
+                  stime: e['start'],
+                  etime: e['end'],
+                  eventID: e['_id']
+               }
+               if(eventMap[e.date] != undefined){
+                  eventMap[e.date].push(events);
+               }else{
+                  eventMap[e.date] = [events];
+               }
+            })
+            addMonthEvent();
+         })
+      }
+   });
+});
+
 function createMonth(){
    let lastDateCurrMonth = new Date(year, month+1, 0);
    let firstDayCurrMonth = new Date(year, month, 1);
@@ -133,7 +160,9 @@ function createRightDrawer(dateArray){
          $.each(eventList, function(i, eventObj){
             let eventDiv = "<div id=e" +  eventObj.eventID + ">";
             let eventName = "<h4 class=text-center>" + eventObj.title + "</h4>";
+            let eventTime = "<p class='text-center'>" + formatEventTime(eventObj.stime) + " - " + formatEventTime(eventObj.etime) + "</p>";
             eventDiv += eventName;
+            eventDiv += eventTime;
             let delBtn = "<button class='deleteButton' data-eId=" + eventObj.eventID + ">Delete</button>";
             eventDiv += delBtn;
             eventDiv += "</div>";
@@ -143,32 +172,24 @@ function createRightDrawer(dateArray){
    })
 }
 
-$(document).ready(function(){
-   createMonth();
-   $.ajax({
-      method: "GET",
-      url: "http://thiman.me:1337/gen",
-      success: function(eventData){
-         $.each(eventData, function(i, data){
-            $.each(data, function(i, e){
-               events = {
-                  title: e['title'],
-                  date: e['date'],
-                  stime: e['start'],
-                  etime: e['end'],
-                  eventID: e['_id']
-               }
-               if(eventMap[e.date] != undefined){
-                  eventMap[e.date].push(events);
-               }else{
-                  eventMap[e.date] = [events];
-               }
-            })
-            addMonthEvent();
-         })
+function formatEventTime(t){
+   let hour = t.split(":")[0];
+   let minutes = t.split(":")[1];
+   if(hour >= 12){
+      if(hour != 12){
+         hour -= 12;
       }
-   });
-});
+      hour += ":"+minutes;
+      hour += "pm";
+   }else{
+      if(hour < 10){
+         hour = hour.substring(1);
+      }
+      hour += ":"+minutes;
+      hour += "am";
+   }
+   return hour;
+}
 
 $("#nextBtn").click(function(){
    if($("#calendar").hasClass("month")){
