@@ -36,6 +36,26 @@ function addWeekEvent(){
    })
 }
 
+/*function addDayEvent(){
+   let calendar = $("#calendar").find("tr td");
+   let startHour, endHour;
+   $.each(eventMap, function(dateKey, eventList){
+      $.each(eventList, function(i, eventObj){
+         startHour = eventObj.stime.split(":")[0];
+         endHour = eventObj.etime.split(":")[0];
+         if(startHour[0] == 0){
+            startHour = startHour.substring(1);
+         }
+         if(endHour[0] == 0){
+            endHour = endHour.substring(1);
+         }
+         $.each(calendar, function(index, item){
+
+         })
+      })
+   })
+}*/
+
 
 $("#addEventBtn").click(function(){
    let eTitle = $("#eventTitle").val();
@@ -53,10 +73,11 @@ $("#addEventBtn").click(function(){
    }
    $.ajax({//Add Events
       method: "POST",
-      url: "http://thiman.me:1337/gen",
+      url: "http://localhost:3000/events",
       data: newEvent,
       success: function(e){
-         let eventData = JSON.parse(JSON.stringify(e))['data'];
+         let eventData = JSON.parse(JSON.stringify(e));
+         console.log(eventData);
          events = {
             title: eventData['title'],
             date: eventData['date'],

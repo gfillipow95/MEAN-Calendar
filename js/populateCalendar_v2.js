@@ -16,25 +16,24 @@ $(document).ready(function(){
    createMonth();
    $.ajax({
       method: "GET",
-      url: "http://thiman.me:1337/gen",
+      url: "http://localhost:3000/events",
       success: function(eventData){
-         $.each(eventData, function(i, data){
-            $.each(data, function(i, e){
-               events = {
-                  title: e['title'],
-                  date: e['date'],
-                  stime: e['start'],
-                  etime: e['end'],
-                  eventID: e['_id']
-               }
-               if(eventMap[e.date] != undefined){
-                  eventMap[e.date].push(events);
-               }else{
-                  eventMap[e.date] = [events];
-               }
-            })
-            addMonthEvent();
+         $.each(eventData, function(i, e){
+            events = {
+               title: e['title'],
+               date: e['date'],
+               stime: e['start'],
+               etime: e['end'],
+               eventID: e['_id']
+            }
+            //console.log(localeFormat.format(e.date))
+            if(eventMap[e.date] != undefined){
+               eventMap[e.date].push(events);
+            }else{
+               eventMap[e.date] = [events];
+            }
          })
+         addMonthEvent();
       }
    });
 });
