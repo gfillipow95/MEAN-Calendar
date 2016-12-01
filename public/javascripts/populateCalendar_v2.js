@@ -8,7 +8,7 @@ const times = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "
                "7pm", "8pm", "9pm", "10pm", "11pm"];
 let eventMap = {};
 let events = {};
-let date = new Date();
+
 let month = date.getMonth();
 let year = date.getFullYear();
 
@@ -22,17 +22,19 @@ $(document).ready(function(){
             events = {
                title: e['title'],
                date: e['date'],
-               stime: e['start'],
-               etime: e['end'],
+               stime: e['stime'],
+               etime: e['etime'],
                eventID: e['_id']
             }
-            //console.log(localeFormat.format(e.date))
-            if(eventMap[e.date] != undefined){
-               eventMap[e.date].push(events);
+            let newDate = new Date(e['date']);
+            let formatDate = localeFormat.format(newDate);
+            if(eventMap[formatDate] != undefined){
+               eventMap[formatDate].push(events);
             }else{
-               eventMap[e.date] = [events];
+               eventMap[formatDate] = [events];
             }
          })
+         //console.log(eventMap)
          addMonthEvent();
       }
    });
@@ -51,7 +53,7 @@ function createMonth(){
       $("#calendar").removeClass();
       $("#calendar").addClass("month");
    }
-   $(".calendarHeader").text(monthFormat.format(firstDayCurrMonth) + " " + firstDayCurrMonth.getFullYear());
+   //$(".calendarHeader").text(monthFormat.format(firstDayCurrMonth) + " " + firstDayCurrMonth.getFullYear());
    for(let i=0; i<7; i++){
       row += "<th>" + daysOfWeek[i] + "</th>";
    }
@@ -96,7 +98,7 @@ function createWeek(){
       $("#calendar").addClass("week");
    }
    date.setDate(date.getDate()-date.getDay());
-   let tempDate = new Date(date);//User tempDate update the date-date attribute. After every row reset the date
+   let tempDate = new Date(date);
    $(".calendarHeader").text(monthAbv.format(date) + " " + date.getDate());
    for(let i=0; i<25; i++){
       for(let j=0; j<8; j++){
@@ -163,6 +165,7 @@ function createRightDrawer(dateArray){
             eventDiv += eventName;
             eventDiv += eventTime;
             let delBtn = "<button class='deleteButton' data-eId=" + eventObj.eventID + ">Delete</button>";
+            let updateBtn = "<button class='updateButton' data-eId=" + eventObj.eventID + ">Edit</button>";
             eventDiv += delBtn;
             eventDiv += "</div>";
             $("#drawerEvents").append(eventDiv);
@@ -220,7 +223,6 @@ $("#prevBtn").click(function(){
 });
 
 $("#monthlyView").click(function(){
-   date = new Date();
    month = date.getMonth();
    year = date.getFullYear();
    createMonth();

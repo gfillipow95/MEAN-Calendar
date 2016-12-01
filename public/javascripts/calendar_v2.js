@@ -68,8 +68,8 @@ $("#addEventBtn").click(function(){
    let newEvent={
       title: eTitle,
       date: newDate,
-      start: sTime,
-      end: eTime
+      stime: sTime,
+      etime: eTime
    }
    $.ajax({//Add Events
       method: "POST",
@@ -77,12 +77,11 @@ $("#addEventBtn").click(function(){
       data: newEvent,
       success: function(e){
          let eventData = JSON.parse(JSON.stringify(e));
-         console.log(eventData);
          events = {
             title: eventData['title'],
             date: eventData['date'],
-            stime: eventData['start'],
-            etime: eventData['end'],
+            stime: eventData['stime'],
+            etime: eventData['etime'],
             eventID: eventData['_id']
          }
          if(eventMap[newDate] != undefined){
@@ -94,6 +93,11 @@ $("#addEventBtn").click(function(){
             addMonthEvent();
          }else if($("#calendar").hasClass("week")){
             addWeekEvent();
+         }
+      },
+      error: function(e, status){
+         if(e.status == 500){
+            alert("Can't add the event");
          }
       }
    });
@@ -126,7 +130,7 @@ $("#table-background").click(function(){
                   let eIndex = eventList.indexOf(eventObj);
                   $.ajax({
                      method: "DELETE",
-                     url: "http://thiman.me:1337/gen/" + eventObj.eventID,
+                     url: "http://localhost:3000/events/" + eventObj.eventID,
                      success: function(data){
                         eventList.splice(eIndex, 1);
                         idString = "#e"+eventObj.eventID;
@@ -149,6 +153,10 @@ $("#calendar").click(function(e){
       createRightDrawer(e.target.getAttribute("data-date").split("/"));
       let drawerWidth = $("#rightDrawer").width();
       $("#rightDrawer").animate({"right": 0}, "fast");
+   }else if($("#calendar").hasClass("week")){
+      $("#editMenu").removeClass("hide");
+      $("#calendar").addClass("disable");
+      $("#table-background").addClass("opacity");
    }
 });
 

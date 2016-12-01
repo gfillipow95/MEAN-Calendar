@@ -1,0 +1,89 @@
+<head>
+   <title><%= title %></title>
+   <link rel="stylesheet" href="stylesheets/main.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+   <div id="table-background">
+      <div id="header">
+         <h1 class="calendarHeader text-center"><%= calendarHeader %></h1>
+         <div>
+            <button type="button" id="prevBtn" class="pastNextBtn text-center"><</button>
+            <button type="button" id="nextBtn" class="pastNextBtn text-center">></button>
+         </div>
+         <div class="btn-grp text-center">
+            <button type="button" id="dailyView" class="viewBtn">Daily</button>
+            <button type="button" id="weeklyView" class="viewBtn">Weekly</button>
+            <button type="button" id="monthlyView" class="viewBtn">Monthly</button>
+         </div>
+      </div>
+      <table id="calendar"></table>
+      <!-- Right Drawer -->
+      <div id="rightDrawer">
+         <button type="button" id="deleteWindow">X</button>
+         <h4 id="drawerDate" class="text-center"></h4>
+         <div id="drawerEvents">
+         </div>
+      </div>
+   </div>
+   <button type="button" id="addEventButton">+</button>
+
+   <!-- ///////////////////////////////////////// -->
+   <!-- Edit Menu -->
+   <div id="editMenu" class="hide">
+      <form>
+         <div>
+            <h3 class="text-center">Add Event</h3>
+            Title:<br>
+            <input type="text" id="eventTitle">
+         </div>
+         <div>
+
+         </div>
+         <div>
+            Date:<br>
+            <input type="date" id="eventDate">
+         </div>
+         <div class="eventTimes">
+            <div>
+               Start Time:<br>
+               <input type="time" id="eventStartTime">
+            </div>
+            <div>
+               End Time:<br>
+               <input type="time" id="eventEndTime">
+            </div>
+         </div>
+         <div id="eventColors">
+            Event Color:<br>
+            <input id="gray" type="button" class="colorBtn" name="#bfbfbf">
+            <input id="darkGreen" type="button" class="colorBtn" name="#00b300">
+            <input id="turqoise" type="button" class="colorBtn" name="#80ffaa">
+            <input id="blue" type="button" class="colorBtn" name="#0066ff">
+            <input id="purple" type="button" class="colorBtn" name="#db4dff">
+            <input id="lightPurple" type="button" class="colorBtn" name="#9999ff">
+            <input id="lightBlue" type="button" class="colorBtn" name="#4ddbff">
+            <input id="red" type="button" class="colorBtn" name="#ff0066">
+            <input id="orange" type="button" class="colorBtn" name="#ff8533">
+            <input id="lightOrange" type="button" class="colorBtn" name="#ffbb99">
+            <input id="yellow" type="button" class="colorBtn" name="#e6e600">
+         </div>
+         <div id="repeat">
+            Repeat:<br>
+            <input type="radio" value="None" checked>None
+            <input type="radio" value="Weekly">Weekly
+            <input type="radio" value="Monthly">Monthly<br>
+
+            <input type="radio" value="Sun">Sun
+            <input type="radio" value="Mon">Mon
+            <input type="radio" value="Tue">Tue
+            <input type="radio" value="Wed">Wed
+            <input type="radio" value="Thurs">Thurs
+            <input type="radio" value="Fri">Fri
+            <input type="radio" value="Sat">Sat<br>
+         </div>
+         <button type="button" class="createEvent" id="addEventBtn">Create Event</button>
+      </form>
+   </div>
+   <!-- //////////////////////////////////////////// -->
+</body>
