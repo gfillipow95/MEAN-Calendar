@@ -58,13 +58,10 @@ console.log(date)
    }
 //}
 
-createMonth();
+//createMonth();
 
 $("#monthlyView").click(function(){
-   /*month = date.getMonth();
-   year = date.getFullYear();
-   createMonth();*/
-   //addMonthEvent();
+
 });
 
 $("#nextBtn").click(function(){
@@ -75,15 +72,16 @@ $("#nextBtn").click(function(){
       year += 1;
    }
    let monthUrl = document.location.href.split("?")[0] + "?date=" + year +"-"+ (incMonth);
-   console.log(monthUrl)
-   //document.location = monthUrl;
-   console.log(document.location.href)
+   document.location = monthUrl;
 });
 
 $("#prevBtn").click(function(){
-   if($("#calendar").hasClass("month")){
-      month -= 1;
-      createMonth();
-      //addMonthEvent();
+   let incMonth;
+   incMonth = month;
+   if(incMonth === 0){
+      incMonth = 12;
+      year -= 1;
    }
+   let monthUrl = document.location.href.split("?")[0] + "?date=" + year +"-"+ (incMonth);
+   document.location = monthUrl;
 });
