@@ -8,31 +8,22 @@ const times = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "
                "7pm", "8pm", "9pm", "10pm", "11pm"];
 
 let row = "<tr>";
-let countHour = 0;
 $("#calendar").empty();
-if(!$("#calendar").hasClass("week")){
+if(!$("#calendar").hasClass("day")){
    $("#calendar").removeClass();
-   $("#calendar").addClass("week");
+   $("#calendar").addClass("day");
 }
-date.setDate(date.getDate()-date.getDay());
-let tempDate = new Date(date);
 for(let i=0; i<25; i++){
    for(let j=0; j<8; j++){
       if(i===0 && j===0){
          row += "<th>Time</th>";
-      }else if(i===0 && j!==0){
-         row += "<th>" + daysOfWeek[j-1] + (date.getMonth()+1) + "/" + date.getDate() + "</th>";
-         date.setDate(date.getDate() + 1);
+      }else if(i===0 && j===1){
+         row += "<th colspan='9'>" + daysOfWeek[j-1] + (date.getMonth()+1) + "/" + date.getDate() + "</th>";
       }else if(i>0 && j===0){
          row += "<td>" + times[i-1] + "</td>";
-      }else{
-         row += "<td data-time=" + countHour + " " + "data-date=" + localeFormat.format(tempDate) + "></td>";
-         tempDate.setDate(tempDate.getDate()+1);
+      }else if(i>0 && j===1){
+         row += "<td colspan='9' data-time=" + times[i-1] + " data-date=" + localeFormat.format(date) + "></td>";
       }
-   }
-   if(i!==0){
-      countHour++;
-      tempDate.setDate(tempDate.getDate()-7);
    }
    row += "</tr>";
    $("#calendar").append(row);
@@ -55,12 +46,13 @@ $("#dailyView").click(function(){
 });
 
 $("#nextBtn").click(function(){
-   let weekUrl = document.location.href.split("?")[0] + "?date=" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
-   document.location = weekUrl;
+   date.setDate(date.getDate() + 1);
+   let dayUrl = document.location.href.split("?")[0] + "?date=" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+   document.location = dayUrl;
 });
 
 $("#prevBtn").click(function(){
-   date.setDate((date.getDate() - 14));
-   let weekUrl = document.location.href.split("?")[0] + "?date=" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
-   document.location = weekUrl;
+   date.setDate(date.getDate() - 1);
+   let dayUrl = document.location.href.split("?")[0] + "?date=" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+   document.location = dayUrl;
 });
