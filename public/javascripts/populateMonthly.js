@@ -1,13 +1,11 @@
-const monthFormat = new Intl.DateTimeFormat('en-US', {month: 'long'});
-const monthNumeric = new Intl.DateTimeFormat('en-US', {month: 'numeric'});
 const localeFormat = new Intl.DateTimeFormat('en-US');
-const monthAbv = new Intl.DateTimeFormat('en-US', {month: 'short'});
 const dayFormat = new Intl.DateTimeFormat('en-US', {weekday: 'long'});
+const monthFormat = new Intl.DateTimeFormat('en-US', {month: 'long'});
 const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const times = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm",
-               "7pm", "8pm", "9pm", "10pm", "11pm"];
 
-//function createMonth(){
+let eventMap = {};
+let events = {};
+
 let lastDateCurrMonth = new Date(year, month+1, 0);
 let firstDayCurrMonth = new Date(year, month, 1);
 let lastDatePrevMonth = new Date(year, month, 0);
@@ -54,9 +52,75 @@ for(let i = 1; i < 7; i++){
       break;
    }
 }
-//}
 
-//createMonth();
+$(document).ready(function(){
+   $.ajax({
+      method: "GET",
+      url: "http://localhost:3000/events",
+      success: function(eventData){
+         $.each(eventData, function(i, e){
+            events = {
+               title: e['title'],
+               date: e['date'],
+               stime: e['stime'],
+               etime: e['etime'],
+               eventID: e['_id']
+            }
+            let newDate = new Date(e['date']);
+            let formatDate = localeFormat.format(newDate);
+            if(eventMap[formatDate] != undefined){
+               eventMap[formatDate].push(events);
+            }else{
+               eventMap[formatDate] = [events];
+            }
+         })
+         addMonthEvent();
+      }
+   });
+});
+
+function createRightDrawer(dateArray){
+   let selectedDay = new Date(dateArray[2], dateArray[0]-1, dateArray[1]);
+   let dateString = dayFormat.format(selectedDay) + " " + monthFormat.format(selectedDay) + " " + dateArray[1] + ", " + dateArray[2];
+   $("#drawerDate").text(dateString);
+   $("#drawerEvents").empty();
+   $.each(eventMap, function(dateKey, eventList){
+      if(dateKey == localeFormat.format(selectedDay)){
+         $.each(eventList, function(i, eventObj){
+            let eventDiv = "<div id=e" +  eventObj.eventID + ">";
+            let eventName = "<h4 class=text-center>" + eventObj.title + "</h4>";
+            let eventTime = "<p class='text-center'>" + formatEventTime(eventObj.stime) + " - " + formatEventTime(eventObj.etime) + "</p>";
+            eventDiv += eventName;
+            eventDiv += eventTime;
+            let delBtn = "<button class='deleteButton' data-eId=" + eventObj.eventID + ">Delete</button>";
+            let updateBtn = "<button class='updateButton' data-eId=" + eventObj.eventID + ">Edit</button>";
+            eventDiv += delBtn;
+            eventDiv += updateBtn;
+            eventDiv += "</div>";
+            $("#drawerEvents").append(eventDiv);
+         })
+      }
+   })
+}
+
+function formatEventTime(t){
+   let hour = t.split(":")[0];
+   let minutes = t.split(":")[1];
+   if(hour >= 12){
+      if(hour != 12){
+         hour -= 12;
+      }
+      hour += ":"+minutes;
+      hour += "pm";
+   }else{
+      if(hour < 10){
+         hour = hour.substring(1);
+      }
+      hour += ":"+minutes;
+      hour += "am";
+   }
+   return hour;
+}
 
 $("#monthlyView").click(function(){
    let resetMonth = "http://"+window.location.host+"/calendar";

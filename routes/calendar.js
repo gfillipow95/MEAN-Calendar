@@ -6,7 +6,9 @@ router.get('/', function(req, res, next) {
    let queryDate = req.query.date;
    let currDate;
    if(queryDate){
-      currDate = moment(new Date(queryDate)).toISOString();//I guess moment needs a date object first, then construct moment
+      currDate = moment(new Date(queryDate));
+      currDate.add(1, 'days');
+      currDate = currDate.toISOString();
    }else{
       currDate = moment().toISOString();
    }
@@ -30,9 +32,7 @@ router.get('/weekly', function(req, res, next){
       endDate = lastDate.day("Saturday");
    }else{
       firstDate = moment();
-      firstDate.add(1, 'days');
       lastDate = moment();
-      lastDate.add(1, 'days');
       currDate = moment().toISOString();
       startDate = firstDate.day("Sunday");
       endDate = lastDate.day("Saturday");
@@ -42,7 +42,7 @@ router.get('/weekly', function(req, res, next){
    res.render('weekly', {
       title: "Weekly View",
       calendarHeader: headerString,
-      currentDate: currDate
+      currentDate: firstDate
    })
 })
 
