@@ -11,6 +11,31 @@ var eventSchema = new Schema({
    etime: String
 });
 
+eventSchema.methods.hasConflicts = function(){
+   let start = this.stime;
+   let end = this.etime;
+   let eId = this._id;
+
+   return new Promise(function(resolve, reject){
+      eventModel.find({$or:
+         [
+            {$and: [{stime:{$gte: start}}, {stime:{$lte: end}}, {_id:{$ne: eId}}]},
+            {$and: [{etime:{$gte: start}}, {etime:{$lte: end}}, {_id:{$ne: eId}}]}
+         ]
+      }, function(err, events){
+         if(err){
+            console.log(err);
+         }else{
+            if(events.length > 0){
+               resolve(events);
+            }else{
+               reject();
+            }
+         }
+      });
+   });
+}
+
 var eventModel = mongoose.model('event', eventSchema);
 
 router.get('/', function(req, res, next){
@@ -27,13 +52,18 @@ router.get('/', function(req, res, next){
 
 router.post('/', function(req, res, next){
    var newEvent = new eventModel(req.body);
-   newEvent.save(function(err, event){
-      if(err){
-         console.log(err);
-         res.send(err);
-      }else{
-         res.json(event);
-      }
+   newEvent.hasConflicts()
+   .then(function(events){
+      res.status(500).send("Conflicting Event Times");
+   }).catch(function(){
+      newEvent.save(function(err, event){
+         if(err){
+            console.log(err);
+            res.send(err);
+         }else{
+            res.json(event);
+         }
+      })
    })
 });
 
@@ -56,12 +86,17 @@ router.patch('/:id', function(req, res, next){
          event.date = req.body.date || event.date;
          event.stime = req.body.stime || event.stime;
          event.etime = req.body.etime || event.etime;
-         event.save(function(err, event){
-            if(err){
-               res.send(err);
-            }else{
-               res.json(event);
-            }
+         event.hasConflicts()
+         .then(function(events){
+            res.status(500).send("Conflicting Event Times");
+         }).catch(function(){
+            event.save(function(err, event){
+               if(err){
+                  res.send(err);
+               }else{
+                  res.json(event);
+               }
+            })
          })
       }
    })

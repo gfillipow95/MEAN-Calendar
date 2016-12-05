@@ -104,7 +104,7 @@ $("#addEventBtn").click(function(){
       },
       error: function(e, status){
          if(e.status == 500){
-            alert("Can't add the event");
+            alert("Can't add the event. Event times are conflicting.");
          }
       }
    });
@@ -196,13 +196,17 @@ $("#saveEventBtn").click(function(){
       etime: eTime
    }
    let eId = $("#saveEventBtn").attr("data-eId");
-   console.log(eId)
    $.ajax({
       method: "PATCH",
       url: "http://localhost:3000/events/" + eId,
       data: newEvent,
       success: function(data){
          location.reload();
+      },
+      error: function(e, status){
+         if(e.status == 500){
+            alert("Can't add the event. Event times are conflicting.");
+         }
       }
    });
    $("#eventMenu").addClass("hide");
