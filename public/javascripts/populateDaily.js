@@ -1,5 +1,4 @@
 const monthFormat = new Intl.DateTimeFormat('en-US', {month: 'long'});
-const monthNumeric = new Intl.DateTimeFormat('en-US', {month: 'numeric'});
 const localeFormat = new Intl.DateTimeFormat('en-US');
 const monthAbv = new Intl.DateTimeFormat('en-US', {month: 'short'});
 const dayFormat = new Intl.DateTimeFormat('en-US', {weekday: 'long'});
