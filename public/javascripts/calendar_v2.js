@@ -25,7 +25,7 @@ function addWeekEvent(){
             endHour = endHour.substring(1);
          }
          $.each(calendar, function(index, item){
-            if(key == item.getAttribute("data-date") && startHour <= item.getAttribute("data-time") && item.getAttribute("data-time") < endHour){
+            if(key == item.getAttribute("data-date") && parseInt(startHour, 10) <= item.getAttribute("data-time") && parseInt(endHour, 10) > item.getAttribute("data-time")){
                if(startHour == item.getAttribute("data-time")){
                   $("[data-date='" + key + "'][data-time='" + item.getAttribute("data-time") + "']").text(eventObj.title);
                }
@@ -50,7 +50,7 @@ function addDayEvent(){
             endHour = endHour.substring(1);
          }
          $.each(calendar, function(index, item){
-            if(dateKey == item.getAttribute("data-date") && startHour <= item.getAttribute("data-time") && item.getAttribute("data-time") < endHour){
+            if(dateKey == item.getAttribute("data-date") && parseInt(startHour, 10) <= item.getAttribute("data-time") && parseInt(endHour, 10) > item.getAttribute("data-time")){
                if(startHour == item.getAttribute("data-time")){
                   $("[data-date='" + dateKey + "'][data-time='" + item.getAttribute("data-time") + "']").text(eventObj.title);
                }
@@ -70,11 +70,13 @@ $("#addEventBtn").click(function(){
    let newDate = new Date(eDate);
    newDate = newDate.setDate(newDate.getDate() + 1);
    newDate = localeFormat.format(newDate);
+   let startDateTime = new Date(eDate + " " + sTime);
+   let endDateTime = new Date(eDate + " " + eTime);
    let newEvent={
       title: eTitle,
       date: newDate,
-      stime: sTime,
-      etime: eTime
+      stime: startDateTime.toISOString(),
+      etime: endDateTime.toISOString()
    }
    $.ajax({//Add Events
       method: "POST",
@@ -82,11 +84,13 @@ $("#addEventBtn").click(function(){
       data: newEvent,
       success: function(e){
          let eventData = JSON.parse(JSON.stringify(e));
+         let formatStartTime = new Date(eventData['stime']);
+         let formatEndTime = new Date(eventData['etime']);
          events = {
             title: eventData['title'],
             date: eventData['date'],
-            stime: eventData['stime'],
-            etime: eventData['etime'],
+            stime: formatStartTime.toLocaleTimeString('en-GB'),
+            etime: formatEndTime.toLocaleTimeString('en-GB'),
             eventID: eventData['_id']
          }
          if(eventMap[newDate] != undefined){

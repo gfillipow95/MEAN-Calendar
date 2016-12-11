@@ -59,11 +59,13 @@ $(document).ready(function(){
       url: "http://localhost:3000/events",
       success: function(eventData){
          $.each(eventData, function(i, e){
+            let formatStartTime = new Date(e['stime']);
+            let formatEndTime = new Date(e['etime']);
             events = {
                title: e['title'],
                date: e['date'],
-               stime: e['stime'],
-               etime: e['etime'],
+               stime: formatStartTime.toLocaleTimeString('en-GB'),
+               etime: formatEndTime.toLocaleTimeString('en-GB'),
                eventID: e['_id']
             }
             let newDate = new Date(e['date']);
