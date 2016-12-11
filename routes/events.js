@@ -54,7 +54,7 @@ router.post('/', function(req, res, next){
    var newEvent = new eventModel(req.body);
    newEvent.hasConflicts()
    .then(function(events){
-      res.status(500).send("Conflicting Event Times");
+      res.status(500).send(events);
    }).catch(function(){
       newEvent.save(function(err, event){
          if(err){

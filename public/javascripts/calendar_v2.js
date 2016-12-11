@@ -108,7 +108,7 @@ $("#addEventBtn").click(function(){
       },
       error: function(e, status){
          if(e.status == 500){
-            alert("Can't add the event. Event times are conflicting.");
+            alert("the event " + e.responseJSON[0].title + " is conflicting with the event you're trying to add.");
          }
       }
    });
@@ -209,7 +209,7 @@ $("#saveEventBtn").click(function(){
       },
       error: function(e, status){
          if(e.status == 500){
-            alert("Can't add the event. Event times are conflicting.");
+            alert("the event " + e[0].title + " is conflicting with the event you're trying to add.");
          }
       }
    });
