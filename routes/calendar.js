@@ -37,7 +37,6 @@ router.get('/weekly', function(req, res, next){
       startDate = firstDate.day("Sunday");
       endDate = lastDate.day("Saturday");
    }
-   console.log(currDate)
    let headerString = startDate.format("MMM. Do - ") + endDate.format("MMM. Do");
    res.render('weekly', {
       title: "Weekly View",
@@ -50,7 +49,7 @@ router.get('/daily', function(req, res, next){
    let queryDate = req.query.date;
    let currDate;
    if(queryDate){
-      currDate = moment(new Date(queryDate)).toISOString();
+      currDate = moment(queryDate, "YYYY-M-D HH:mm:ss").toISOString();
    }else{
       currDate = moment().toISOString();
    }
