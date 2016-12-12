@@ -67,6 +67,7 @@ $("#addEventBtn").click(function(){
    let eDate = $("#eventDate").val();
    let sTime = $("#eventStartTime").val();
    let eTime = $("#eventEndTime").val();
+   let eColor = $(".selectedColor").attr("name");
    let newDate = new Date(eDate);
    newDate = newDate.setDate(newDate.getDate() + 1);
    newDate = localeFormat.format(newDate);
@@ -76,7 +77,8 @@ $("#addEventBtn").click(function(){
       title: eTitle,
       date: newDate,
       stime: startDateTime.toISOString(),
-      etime: endDateTime.toISOString()
+      etime: endDateTime.toISOString(),
+      color: eColor
    }
    $.ajax({//Add Events
       method: "POST",
@@ -91,6 +93,7 @@ $("#addEventBtn").click(function(){
             date: eventData['date'],
             stime: formatStartTime.toLocaleTimeString('en-GB'),
             etime: formatEndTime.toLocaleTimeString('en-GB'),
+            color: eventData['color'],
             eventID: eventData['_id']
          }
          if(eventMap[newDate] != undefined){
@@ -217,6 +220,11 @@ $("#saveEventBtn").click(function(){
    $("#calendar").removeClass("disable");
    $("#table-background").removeClass("opacity");
 });
+
+$(".colorBtn").click(function(e){
+   $("#eventColors>input.selectedColor").removeClass("selectedColor");
+   $(this).addClass("selectedColor");
+})
 
 $("#calendar").click(function(e){
    createRightDrawer(e.target.getAttribute("data-date").split("/"));
