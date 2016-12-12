@@ -90,7 +90,7 @@ function createRightDrawer(dateArray){
    $.each(eventMap, function(dateKey, eventList){
       if(dateKey == localeFormat.format(selectedDay)){
          $.each(eventList, function(i, eventObj){
-            let eventDiv = "<div id=e" +  eventObj.eventID + ">";
+            let eventDiv = "<div id=e" +  eventObj.eventID +">";
             let eventName = "<h4 class=text-center>" + eventObj.title + "</h4>";
             let eventTime = "<p class='text-center'>" + formatEventTime(eventObj.stime) + " - " + formatEventTime(eventObj.etime) + "</p>";
             eventDiv += eventName;
@@ -101,6 +101,7 @@ function createRightDrawer(dateArray){
             eventDiv += updateBtn;
             eventDiv += "</div>";
             $("#drawerEvents").append(eventDiv);
+            $("#e"+eventObj.eventID).css("background-color", eventObj.color);
          })
       }
    })

@@ -5,7 +5,7 @@ function addMonthEvent(){
    $.each(eventMap, function(key, value){
       $.each(calendar, function(index, item){
          if(key == item.getAttribute("data-date")){
-            $("[data-date='" + key + "']").css("background-color", "yellow");
+            $("[data-date='" + key + "']").css("background-color", "#80bfff");
          }
       });
    });
