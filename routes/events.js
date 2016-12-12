@@ -7,8 +7,9 @@ var Schema = mongoose.Schema;
 var eventSchema = new Schema({
    title:  String,
    date: Date,
-   stime: String,
-   etime: String
+   stime: Date,
+   etime: Date,
+   color: String
 });
 
 eventSchema.methods.hasConflicts = function(){
@@ -86,6 +87,7 @@ router.patch('/:id', function(req, res, next){
          event.date = req.body.date || event.date;
          event.stime = req.body.stime || event.stime;
          event.etime = req.body.etime || event.etime;
+         event.color = req.body.color || event.color;
          event.hasConflicts()
          .then(function(events){
             res.status(500).send("Conflicting Event Times");
