@@ -157,6 +157,7 @@ $("#table-background").click(function(){
                         $(idString).remove();
                         if(eventList.length == 0){
                            $("[data-date='" + dateKey + "']").css("background-color", "white");
+                           $("[data-date='" + dateKey + "']").text("");
                            delete eventMap[dateKey];
                         }
                      }
