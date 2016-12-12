@@ -49,6 +49,7 @@ $(document).ready(function(){
                date: e['date'],
                stime: formatStartTime.toLocaleTimeString('en-GB'),
                etime: formatEndTime.toLocaleTimeString('en-GB'),
+               color: e['color'],
                eventID: e['_id']
             }
             let newDate = new Date(e['date']);
@@ -83,6 +84,7 @@ function createRightDrawer(dateArray){
             eventDiv += updateBtn;
             eventDiv += "</div>";
             $("#drawerEvents").append(eventDiv);
+            $("#e"+eventObj.eventID).css("background-color", eventObj.color);
          })
       }
    })

@@ -29,7 +29,7 @@ function addWeekEvent(){
                if(startHour == item.getAttribute("data-time")){
                   $("[data-date='" + key + "'][data-time='" + item.getAttribute("data-time") + "']").text(eventObj.title);
                }
-               $("[data-date='" + key + "'][data-time='" + item.getAttribute("data-time") + "']").css("background-color", "yellow");
+               $("[data-date='" + key + "'][data-time='" + item.getAttribute("data-time") + "']").css("background-color", eventObj.color);
             }
          })
       })
@@ -54,7 +54,7 @@ function addDayEvent(){
                if(startHour == item.getAttribute("data-time")){
                   $("[data-date='" + dateKey + "'][data-time='" + item.getAttribute("data-time") + "']").text(eventObj.title);
                }
-               $("[data-date='" + dateKey + "'][data-time='" + item.getAttribute("data-time") + "']").css("background-color", "yellow");
+               $("[data-date='" + dateKey + "'][data-time='" + item.getAttribute("data-time") + "']").css("background-color", eventObj.color);
             }
          })
       })
