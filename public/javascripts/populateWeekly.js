@@ -72,7 +72,10 @@ $(document).ready(function(){
 });
 
 function createRightDrawer(dateArray){
-   let selectedDay = new Date(dateArray[2], dateArray[0]-1, dateArray[1]);
+   let month = parseInt(dateArray[0].replace(/\u200E/g,""), 10)-1;
+   let year = parseInt(dateArray[2].replace(/\u200E/g,""), 10);
+   let day = parseInt(dateArray[1].replace(/\u200E/g,""), 10);
+   let selectedDay = new Date(year, month, day);
    let dateString = dayFormat.format(selectedDay) + " " + monthFormat.format(selectedDay) + " " + dateArray[1] + ", " + dateArray[2];
    $("#drawerDate").text(dateString);
    $("#drawerEvents").empty();

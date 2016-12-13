@@ -24,6 +24,8 @@ function addWeekEvent(){
          if(endHour[0] == 0){
             endHour = endHour.substring(1);
          }
+         startHour = startHour.replace(/\u200E/g,"");
+         endHour = endHour.replace(/\u200E/g,"");
          $.each(calendar, function(index, item){
             if(key == item.getAttribute("data-date") && parseInt(startHour, 10) <= item.getAttribute("data-time") && parseInt(endHour, 10) > item.getAttribute("data-time")){
                if(startHour == item.getAttribute("data-time")){
@@ -50,6 +52,8 @@ function addDayEvent(){
             endHour = endHour.substring(1);
          }
          $.each(calendar, function(index, item){
+            startHour = startHour.replace(/\u200E/g,"");
+            endHour = endHour.replace(/\u200E/g,"");
             if(dateKey == item.getAttribute("data-date") && parseInt(startHour, 10) <= item.getAttribute("data-time") && parseInt(endHour, 10) > item.getAttribute("data-time")){
                if(startHour == item.getAttribute("data-time")){
                   $("[data-date='" + dateKey + "'][data-time='" + item.getAttribute("data-time") + "']").text(eventObj.title);
