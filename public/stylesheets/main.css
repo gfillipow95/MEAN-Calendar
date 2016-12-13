@@ -1,4 +1,5 @@
 
+
 .pastNextBtn{
    background-color: #1a8cff;
    border: none;
@@ -239,7 +240,7 @@ A simple black dot to represent an event.*/
 }
 
 .colorBtn{
-   border: none;
+   border: solid 1px;
    cursor: pointer;
    height: 25px;
    width: 25px;
