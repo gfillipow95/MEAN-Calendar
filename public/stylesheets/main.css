@@ -15,6 +15,7 @@
 .pastNextBtn:hover{
    background-color: #b3d9ff;
    color: black;
+   box-shadow: 5px 5px 25px black;
 }
 
 #nextBtn{
@@ -128,6 +129,7 @@ A simple black dot to represent an event.*/
 .viewBtn:hover{
    background-color: #b3d9ff;
    color: black;
+   box-shadow: 5px 5px 25px black;
 }
 
 /*Circle button with "+" to add an event in any view*/

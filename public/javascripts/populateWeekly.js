@@ -71,51 +71,31 @@ $(document).ready(function(){
    });
 });
 
-function createRightDrawer(dateArray){
-   let month = parseInt(dateArray[0].replace(/\u200E/g,""), 10)-1;
-   let year = parseInt(dateArray[2].replace(/\u200E/g,""), 10);
-   let day = parseInt(dateArray[1].replace(/\u200E/g,""), 10);
-   let selectedDay = new Date(year, month, day);
-   let dateString = dayFormat.format(selectedDay) + " " + monthFormat.format(selectedDay) + " " + dateArray[1] + ", " + dateArray[2];
-   $("#drawerDate").text(dateString);
-   $("#drawerEvents").empty();
-   $.each(eventMap, function(dateKey, eventList){
-      if(dateKey == localeFormat.format(selectedDay)){
-         $.each(eventList, function(i, eventObj){
-            let eventDiv = "<div id=e" +  eventObj.eventID + ">";
-            let eventName = "<h4 class=text-center>" + eventObj.title + "</h4>";
-            let eventTime = "<p class='text-center'>" + formatEventTime(eventObj.stime) + " - " + formatEventTime(eventObj.etime) + "</p>";
-            eventDiv += eventName;
-            eventDiv += eventTime;
-            let delBtn = "<button class='deleteButton' data-eId=" + eventObj.eventID + ">Delete</button>";
-            let updateBtn = "<button class='updateButton' data-eId=" + eventObj.eventID + ">Edit</button>";
-            eventDiv += delBtn;
-            eventDiv += updateBtn;
-            eventDiv += "</div>";
-            $("#drawerEvents").append(eventDiv);
-            $("#e"+eventObj.eventID).css("background-color", eventObj.color);
+function addWeekEvent(){
+   let calendar = $("#calendar").find("tr td");
+   let startHour, endHour;
+   $.each(eventMap, function(key, value){
+      $.each(value, function(i, eventObj){
+         startHour = eventObj.stime.split(":")[0];
+         endHour = eventObj.etime.split(":")[0];
+         if(startHour[0] == 0){
+            startHour = startHour.substring(1);
+         }
+         if(endHour[0] == 0){
+            endHour = endHour.substring(1);
+         }
+         startHour = startHour.replace(/\u200E/g,"");
+         endHour = endHour.replace(/\u200E/g,"");
+         $.each(calendar, function(index, item){
+            if(key == item.getAttribute("data-date") && parseInt(startHour, 10) <= item.getAttribute("data-time") && parseInt(endHour, 10) > item.getAttribute("data-time")){
+               if(startHour == item.getAttribute("data-time")){
+                  $("[data-date='" + key + "'][data-time='" + item.getAttribute("data-time") + "']").text(eventObj.title);
+               }
+               $("[data-date='" + key + "'][data-time='" + item.getAttribute("data-time") + "']").css("background-color", eventObj.color);
+            }
          })
-      }
+      })
    })
-}
-
-function formatEventTime(t){
-   let hour = t.split(":")[0];
-   let minutes = t.split(":")[1];
-   if(hour >= 12){
-      if(hour != 12){
-         hour -= 12;
-      }
-      hour += ":"+minutes;
-      hour += "pm";
-   }else{
-      if(hour < 10){
-         hour = hour.substring(1);
-      }
-      hour += ":"+minutes;
-      hour += "am";
-   }
-   return hour;
 }
 
 $("#monthlyView").click(function(){
