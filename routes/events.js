@@ -1,43 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-var eventSchema = new Schema({
-   title:  String,
-   date: Date,
-   stime: Date,
-   etime: Date,
-   color: String
-});
-
-eventSchema.methods.hasConflicts = function(){
-   let dateCheck = this.date;
-   let start = this.stime;
-   let end = this.etime;
-   let eId = this._id;
-   return new Promise(function(resolve, reject){
-      eventModel.find({$or:
-         [
-            {$and: [{stime:{$lte: start}}, {etime:{$gte: start}}, {_id:{$ne: eId}}]},
-            {$and: [{stime:{$lte: end}}, {etime:{$gte: end}}, {_id:{$ne: eId}}]}
-         ]
-      }, function(err, events){
-         if(err){
-            console.log(err);
-         }else{
-            if(events.length > 0){
-               resolve(events);
-            }else{
-               reject();
-            }
-         }
-      });
-   });
-}
-
-var eventModel = mongoose.model('event', eventSchema);
+var eventModel = require('../models/events.js');
 
 router.get('/', function(req, res, next){
    eventModel.find(function(err, event){
@@ -59,7 +22,6 @@ router.post('/', function(req, res, next){
    }).catch(function(){
       newEvent.save(function(err, event){
          if(err){
-            console.log(err);
             res.send(err);
          }else{
             res.json(event);

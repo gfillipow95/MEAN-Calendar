@@ -1,26 +1,24 @@
-var express = require('express');
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var eventSchema = new Schema({
    title:  String,
    date: Date,
-   stime: String,
-   etime: String
+   stime: Date,
+   etime: Date,
+   color: String
 });
 
-var eventModel = mongoose.model('event', eventSchema);
-
-function hasConflicts(){
+eventSchema.methods.hasConflicts = function(){
+   let dateCheck = this.date;
    let start = this.stime;
    let end = this.etime;
-
+   let eId = this._id;
    return new Promise(function(resolve, reject){
-      eventModel.find({$or:
+      mongoose.model('event', eventSchema).find({$or:
          [
-            {$and: [{stime:{$gte: start}}, {stime:{$lte: end}}]},
-            {$and: [{etime:{$gte:start}}, {etime:{$lte: end}}]}
+            {$and: [{stime:{$lte: start}}, {etime:{$gte: start}}, {_id:{$ne: eId}}]},
+            {$and: [{stime:{$lte: end}}, {etime:{$gte: end}}, {_id:{$ne: eId}}]}
          ]
       }, function(err, events){
          if(err){
@@ -35,3 +33,5 @@ function hasConflicts(){
       });
    });
 }
+
+module.exports = mongoose.model('event', eventSchema);
