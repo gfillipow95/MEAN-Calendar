@@ -5,11 +5,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('client-sessions');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var events = require('./routes/events');
 var calendar = require('./routes/calendar');
+var login = require('./routes/login');
 
 var app = express();
 app.use(cors());
@@ -40,6 +42,13 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/events', events);
 app.use('/calendar', calendar);
+app.use('/login', login);
+/*app.use(session({
+  cookieName: 'session',
+  secret: 'a$%jdj([jYx#29s*-&4jzwu^-',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
