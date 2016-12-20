@@ -1,4 +1,7 @@
-
+html, body {
+    height: 100%;
+    margin: 0px;
+}
 
 .pastNextBtn{
    background-color: #1a8cff;
@@ -95,25 +98,6 @@ th{
 /*Set the time column width in the daily view to 5% of the table's width*/
 #dailyViewTime{
    width: 5%;
-}
-
-/*Fake event in the month view.
-A simple black dot to represent an event.*/
-#eventMonth{
-   background-color: black;
-   position: relative;
-   top: 60%;
-   height: 20%;
-}
-
-/*Fake event color for the weekly and daily view*/
-.event1{
-   background-color: #ff9999;
-}
-
-/*Fake event color for the weekly and daily view*/
-.event2{
-   background-color: #99e6ff;
 }
 
 .viewBtn{
@@ -231,6 +215,27 @@ A simple black dot to represent an event.*/
 .eventTimes div{
    display: inline-block;
 }
+
+/********************/
+/*Login and Register Menu*/
+/********************/
+
+.loginRegisterMenu {
+   width: 25%;
+   background-color: #d0d5dd;
+   position: fixed;
+   top: 25%;
+   left: 35%;
+   padding: 1%;
+   border-radius: 2%;
+   box-shadow: 5px 5px 25px black;
+}
+
+.loginRegisterBackground {
+   background-color: #2aeac7;
+   height: 100%;
+}
+
 
 /********************/
 /*Color Event Picker*/
