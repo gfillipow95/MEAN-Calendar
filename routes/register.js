@@ -10,9 +10,13 @@ router.post('/', function(req, res, next){
    var newUser = new userModel(req.body);
    newUser.save(function(err, user){
       if(err){
-         res.send(err);
+         if(err.code === 11000){
+            res.render('register', {error: "Sorry, the email is already in use."})
+         }else{
+            res.send(err);
+         }
       }else{
-         res.send({redirect: '/calendar'});
+         res.redirect('/calendar');
       }
    })
 });

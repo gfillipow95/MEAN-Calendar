@@ -12,20 +12,22 @@
                <h1>Register for Calendar</h1>
                <div>
                   Full Name:<br>
-                  <input type="text" id="fullNameInput">
+                  <input type="text" name="name" id="fullNameInput">
                </div>
                <div>
                   Email:<br>
-                  <input type="email" id="emailInput">
+                  <input type="email" name="email" id="emailInput">
+                  <% if (typeof error !== 'undefined'){%>
+                     <p><%= error %></p>
+                  <%}%>
                </div>
                <div>
                   Password:<br>
-                  <input type="password" id="passwordInput">
+                  <input type="password" name="password" id="passwordInput">
                </div>
-               <button type="button" id="registerUser">register</button>
+               <input type="submit" id="registerUser">
             </form>
          </div>
       </div>
    </body>
-   <script src="/javascripts/users.js"></script>
 </html>
