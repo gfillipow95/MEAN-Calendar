@@ -12,11 +12,13 @@ var users = require('./routes/users');
 var events = require('./routes/events');
 var calendar = require('./routes/calendar');
 var login = require('./routes/login');
+var register = require('./routes/register');
 
 var app = express();
 app.use(cors());
 
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/test');
 var db = mongoose.connection;
 
@@ -43,6 +45,7 @@ app.use('/users', users);
 app.use('/events', events);
 app.use('/calendar', calendar);
 app.use('/login', login);
+app.use('/register', register);
 /*app.use(session({
   cookieName: 'session',
   secret: 'a$%jdj([jYx#29s*-&4jzwu^-',
