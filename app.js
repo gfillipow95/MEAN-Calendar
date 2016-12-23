@@ -13,6 +13,8 @@ var events = require('./routes/events');
 var calendar = require('./routes/calendar');
 var login = require('./routes/login');
 var register = require('./routes/register');
+var logout = require('./routes/logout');
+var sessionMiddleware = require('./session_middleware');
 
 var app = express();
 app.use(cors());
@@ -40,18 +42,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  cookieName: 'session',
+  secret: 'a$%jdj([jYx#29s*-&4jzwu^-',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
+
+app.use(sessionMiddleware.authenticate);
 app.use('/', index);
 app.use('/users', users);
 app.use('/events', events);
 app.use('/calendar', calendar);
 app.use('/login', login);
 app.use('/register', register);
-/*app.use(session({
-  cookieName: 'session',
-  secret: 'a$%jdj([jYx#29s*-&4jzwu^-',
-  duration: 30 * 60 * 1000,
-  activeDuration: 5 * 60 * 1000,
-}));*/
+app.use('/logout', logout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

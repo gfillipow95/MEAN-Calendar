@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
+var sessionMiddleware = require('../session_middleware');
 
-router.get('/', function(req, res, next) {
+router.get('/', sessionMiddleware.requireLogin, function(req, res, next) {
    let queryDate = req.query.date;
    let currDate;
    if(queryDate){
@@ -19,7 +20,7 @@ router.get('/', function(req, res, next) {
    });
 });
 
-router.get('/weekly', function(req, res, next){
+router.get('/weekly', sessionMiddleware.requireLogin, function(req, res, next){
    let queryDate = req.query.date;
    let firstDate, lastDate, currDate, startDate, endDate;
    if(queryDate){
@@ -45,7 +46,7 @@ router.get('/weekly', function(req, res, next){
    })
 })
 
-router.get('/daily', function(req, res, next){
+router.get('/daily', sessionMiddleware.requireLogin, function(req, res, next){
    let queryDate = req.query.date;
    let currDate;
    if(queryDate){
