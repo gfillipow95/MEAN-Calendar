@@ -47,6 +47,9 @@ app.use(session({
   secret: 'a$%jdj([jYx#29s*-&4jzwu^-',
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
+  httpOnly: true,
+  secure: true,
+  ephemeral: true
 }));
 
 app.use(sessionMiddleware.authenticate);
