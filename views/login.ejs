@@ -10,18 +10,20 @@
          <div class='loginRegisterMenu'>
             <form method="post">
                <h1>Sign in to Calendar</h1>
+               <% if (typeof error !== 'undefined'){%>
+                  <p><%= error %></p>
+               <%}%>
                <div>
                   Email:<br>
-                  <input type="email" id="emailInput">
+                  <input type="email" name="email" id="loginEmailInput">
                </div>
                <div>
                   Password:<br>
-                  <input type="password" id="passwordInput">
+                  <input type="password" name="password" id="loginPasswordInput">
                </div>
                <input type="submit" id="loginUser">
             </form>
          </div>
       </div>
    </body>
-   <script src="/javascripts/users.js"></script>
 </html>
