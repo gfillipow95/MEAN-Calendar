@@ -1,4 +1,5 @@
 var express = require('express');
+var bcrypt = require('bcryptjs');
 var router = express.Router();
 var userModel = require('../models/users.js');
 
@@ -7,7 +8,13 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/', function(req, res, next){
-   var newUser = new userModel(req.body);
+   var salt = bcrypt.genSaltSync(10);
+   var hash = bcrypt.hashSync(req.body.password, salt);
+   var newUser = new userModel({
+      name: req.body.name,
+      email: req.body.email,
+      password: hash
+   });
    newUser.save(function(err, user){
       if(err){
          if(err.code === 11000){

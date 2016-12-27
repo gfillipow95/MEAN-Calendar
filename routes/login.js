@@ -1,4 +1,5 @@
 var express = require('express');
+var bcrypt = require('bcryptjs');
 var router = express.Router();
 var userModel = require('../models/users.js');
 
@@ -11,7 +12,7 @@ router.post('/', function(req, res, next){
       if(!user){
          res.render('login', {error: "Sorry, you have entered the wrong email"});
       }else{
-         if(req.body.password === user.password){
+         if(bcrypt.compareSync(req.body.password, user.password)){
             req.session.user = user;
             res.redirect('/calendar');
          }else{
