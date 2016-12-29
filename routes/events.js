@@ -3,7 +3,7 @@ var router = express.Router();
 var eventModel = require('../models/events.js');
 
 router.get('/', function(req, res, next){
-   eventModel.find(function(err, event){
+   eventModel.find({userID: req.session.user._id}).find(function(err, event){
       if(err){
          console.log(err);
          res.send(err);
@@ -15,7 +15,14 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/', function(req, res, next){
-   var newEvent = new eventModel(req.body);
+   var newEvent = new eventModel({
+      title: req.body.title,
+      date: req.body.date,
+      stime: req.body.stime,
+      etime: req.body.etime,
+      color: req.body.color,
+      userID: req.session.user._id
+   });
    newEvent.hasConflicts()
    .then(function(events){
       res.status(500).send(events);
@@ -45,25 +52,29 @@ router.patch('/:id', function(req, res, next){
       if(err){
          res.send(err);
       }else{
-         event.title = req.body.title || event.title;
-         event.date = req.body.date || event.date;
-         event.stime = req.body.stime || event.stime;
-         event.etime = req.body.etime || event.etime;
-         event.color = req.body.color || event.color;
-         event.hasConflicts()
+         console.log("New Title: ", req.body.title);
+         event.title = req.body.title;
+         event.date = req.body.date;
+         event.stime = req.body.stime;
+         event.etime = req.body.etime;
+         event.color = req.body.color;
+         var update = new eventModel(event);
+         update.hasConflicts()
          .then(function(events){
             res.status(500).send("Conflicting Event Times");
          }).catch(function(){
-            event.save(function(err, event){
+            update.save(function(err, updatedEvent){
+               console.log(updatedEvent);
                if(err){
                   res.send(err);
                }else{
-                  res.json(event);
+                  console.log("Update Title: ", updatedEvent.title);
+                  res.json(updatedEvent);
                }
             })
          })
       }
-   })
+   });
 });
 
 module.exports = router;

@@ -6,7 +6,8 @@ var eventSchema = new Schema({
    date: Date,
    stime: Date,
    etime: Date,
-   color: String
+   color: String,
+   userID: Schema.Types.ObjectId
 });
 
 eventSchema.methods.hasConflicts = function(){
