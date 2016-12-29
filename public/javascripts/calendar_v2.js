@@ -162,6 +162,8 @@ $("#table-background").click(function(){
                   $("#editDate").val(eventObj.date.split("T")[0]);
                   $("#editStartTime").val(eventObj.stime);
                   $("#editEndTime").val(eventObj.etime);
+                  $("#editColors>input.selectedColor").removeClass("selectedColor");
+                  $("input[name*='"+eventObj.color+"']").addClass("selectedColor");
                   $("#saveEventBtn").attr("data-eId", eventObj.eventID);
                }
             })
@@ -173,11 +175,12 @@ $("#table-background").click(function(){
    }
 });
 
-$("#saveEventBtn").click(function(){
+$("#saveEventBtn").on("click", function(){
    let eTitle = $("#editTitle").val();
    let eDate = $("#editDate").val();
    let sTime = $("#editStartTime").val();
    let eTime = $("#editEndTime").val();
+   let eColor = $(".selectedColor").attr("name");
    let newDate = new Date(eDate);
    newDate = newDate.setDate(newDate.getDate() + 1);
    newDate = localeFormat.format(newDate);
@@ -185,7 +188,8 @@ $("#saveEventBtn").click(function(){
       title: eTitle,
       date: newDate,
       stime: sTime,
-      etime: eTime
+      etime: eTime,
+      color: eColor
    }
    let eId = $("#saveEventBtn").attr("data-eId");
    $.ajax({
@@ -207,7 +211,11 @@ $("#saveEventBtn").click(function(){
 });
 
 $(".colorBtn").click(function(e){
-   $("#eventColors>input.selectedColor").removeClass("selectedColor");
+   if($("#editMenu").hasClass("hide")){
+      $("#editColors>input.selectedColor").removeClass("selectedColor");
+   }else if($("#eventMenu").hasClass("hide")){
+      $("#eventColors>input.selectedColor").removeClass("selectedColor");
+   }
    $(this).addClass("selectedColor");
 })
 
