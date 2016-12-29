@@ -180,7 +180,7 @@ $("#saveEventBtn").on("click", function(){
    let eDate = $("#editDate").val();
    let sTime = $("#editStartTime").val();
    let eTime = $("#editEndTime").val();
-   let eColor = $(".selectedColor").attr("name");
+   let eColor = $("#editColors>input.selectedColor").attr("name");
    let newDate = new Date(eDate);
    newDate = newDate.setDate(newDate.getDate() + 1);
    newDate = localeFormat.format(newDate);
