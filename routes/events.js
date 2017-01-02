@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 var eventModel = require('../models/events.js');
 
 router.get('/', function(req, res, next){
@@ -58,13 +59,11 @@ router.patch('/:id', function(req, res, next){
          event.stime = req.body.stime;
          event.etime = req.body.etime;
          event.color = req.body.color;
-         var update = new eventModel(event);
-         update.hasConflicts()
+         event.hasConflicts()
          .then(function(events){
-            res.status(500).send("Conflicting Event Times");
+            res.status(500).send(events);
          }).catch(function(){
-            update.save(function(err, updatedEvent){
-               console.log(updatedEvent);
+            event.save(function(err, updatedEvent){
                if(err){
                   res.send(err);
                }else{

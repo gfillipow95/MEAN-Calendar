@@ -85,6 +85,8 @@ $("#addEventBtn").click(function(){
          }else{
             eventMap[newDate] = [events];
          }
+         console.log(newDate); //Returns 1/4/2017 so I can pass this into the right drawer function
+         createRightDrawer(newDate.split("/"));
          if($("#calendar").hasClass("month")){
             addMonthEvent();
          }else if($("#calendar").hasClass("week")){
@@ -95,7 +97,7 @@ $("#addEventBtn").click(function(){
       },
       error: function(e, status){
          if(e.status == 500){
-            alert("the event " + e.responseJSON[0].title + " is conflicting with the event you're trying to add.");
+            alert("the event, '" + e.responseJSON[0].title + "' is conflicting with the event you're trying to create.");
          }
       }
    });
@@ -184,11 +186,13 @@ $("#saveEventBtn").on("click", function(){
    let newDate = new Date(eDate);
    newDate = newDate.setDate(newDate.getDate() + 1);
    newDate = localeFormat.format(newDate);
+   let startDateTime = new Date(eDate + " " + sTime);
+   let endDateTime = new Date(eDate + " " + eTime);
    let newEvent={
       title: eTitle,
       date: newDate,
-      stime: sTime,
-      etime: eTime,
+      stime: startDateTime.toISOString(),
+      etime: endDateTime.toISOString(),
       color: eColor
    }
    let eId = $("#saveEventBtn").attr("data-eId");
@@ -197,11 +201,37 @@ $("#saveEventBtn").on("click", function(){
       url: "http://localhost:3000/events/" + eId,
       data: newEvent,
       success: function(data){
-         location.reload();
+         let eventData = JSON.parse(JSON.stringify(data));
+         let formatStartTime = new Date(eventData['stime']);
+         let formatEndTime = new Date(eventData['etime']);
+         events = {
+            title: eventData['title'],
+            date: eventData['date'],
+            stime: formatStartTime.toLocaleTimeString('en-GB'),
+            etime: formatEndTime.toLocaleTimeString('en-GB'),
+            color: eventData['color'],
+            eventID: eventData['_id']
+         }
+         let replaceIndex;
+         $.each(eventMap[newDate], function(index, e){
+            if(e.eventID === events.eventID){
+               replaceIndex = index;
+            }
+         });
+         eventMap[newDate][replaceIndex] = events;
+         createRightDrawer(newDate.split("/"));
+         if($("#calendar").hasClass("month")){
+            addMonthEvent();
+         }else if($("#calendar").hasClass("week")){
+            addWeekEvent();
+         }else if($("#calendar").hasClass("day")){
+            addDayEvent();
+         }
       },
       error: function(e, status){
          if(e.status == 500){
-            alert("the event " + e[0].title + " is conflicting with the event you're trying to add.");
+            console.log(e.responseJSON[0].title)
+            alert("the event, '" + e.responseJSON[0].title + "' is conflicting with the event you're trying to create.");
          }
       }
    });
