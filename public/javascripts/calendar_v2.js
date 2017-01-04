@@ -250,12 +250,16 @@ $(".colorBtn").click(function(e){
 })
 
 $("#calendar").click(function(e){
+   $("#table-background").addClass("disable");
+   $("#table-background").animate({"opacity": "-=0.4"});
    createRightDrawer(e.target.getAttribute("data-date").split("/"));
    let drawerWidth = $("#rightDrawer").width();
-   $("#rightDrawer").animate({"right": 0}, "fast");
+   $("#rightDrawer").animate({"right": 0,}, "450");
 });
 
 $("#deleteWindow").click(function(){
    let drawerWidth = $("#rightDrawer").width();
-   $("#rightDrawer").animate({"right": "-25%"}, "fast");
+   $("#rightDrawer").animate({"right": "-30%"}, "450");
+   $("#table-background").removeClass("disable");
+   $("#table-background").animate({"opacity": "+=0.4"});
 });

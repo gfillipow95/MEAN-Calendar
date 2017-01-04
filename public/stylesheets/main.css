@@ -137,12 +137,6 @@ th{
    color: black;
 }
 
-#deleteWindow{
-   background-color: #ff3300;
-   border-radius: 100%;
-   position: relative;
-}
-
 .hide{
    display: none;
 }
@@ -153,7 +147,6 @@ th{
 
 .disable{
    pointer-events: none;
-   opacity: 0.4;
 }
 
 .opacity{
@@ -171,6 +164,7 @@ th{
    position: fixed;
    top: 25%;
    left: 40%;
+   z-index: 100;
    box-shadow: 5px 5px 25px black;
    border-radius: 2%;
    padding: 1%;
@@ -193,8 +187,19 @@ th{
    height: 100%;
    width: 25%;
    position: fixed;
-   right: -25%;
+   right: -30%;
    top: 0;
+   box-shadow: 0px -5px 25px black;
+}
+
+#deleteWindow{
+   background-color: #ff3300;
+   height: 30px;
+   width: 40px;
+   border: none;
+   position: relative;
+   top: 0px;
+   color: white;
 }
 
 /*unerline the date in the right drawer view*/
