@@ -15,7 +15,7 @@ function createRightDrawer(dateArray){
             eventDiv += eventName;
             eventDiv += eventTime;
             let delBtn = "<button class='deleteButton' data-eId=" + eventObj.eventID + ">X</button>";
-            let updateBtn = "<button class='updateButton' data-eId=" + eventObj.eventID + ">Edit</button>";
+            let updateBtn = "<button class='updateButton' data-eId=" + eventObj.eventID + ">&#9998;</button>";
             eventDiv += updateBtn;
             eventDiv += delBtn;
             eventDiv += "</div>";
@@ -105,27 +105,31 @@ $("#addEventBtn").click(function(){
    $("#eventDate").val("");
    $("#eventStartTime").val("");
    $("#eventEndTime").val("");
-   $("#editMenu").addClass("hide");
+   $("#editMenu").fadeOut(400, function(){$("#editMenu").addClass("hide");});
+   $("#table-background").animate({"opacity": "1"});
    $("#calendar").removeClass("disable");
-   $("#table-background").removeClass("opacity");
 });
 
 $("#addEventButton").click(function(){
-   $("#editMenu").removeClass("hide");
+   $("#editMenu").fadeIn(400, function(){$("#editMenu").removeClass("hide");});
+   $("#table-background").animate({"opacity": "0.4"});
    $("#calendar").addClass("disable");
-   $("#table-background").addClass("opacity");
+   //$("#table-background").addClass("opacity");
 });
 
 $("#table-background").click(function(){
    if($("#editMenu").hasClass("hide") === false){
-      $("#editMenu").addClass("hide");
+      $("#editMenu").fadeOut(400, function(){$("#editMenu").addClass("hide")});
+      $("#table-background").animate({"opacity": "1"});
+      //$("#editMenu").addClass("hide");
       $("#calendar").removeClass("disable");
-      $("#table-background").removeClass("opacity");
+      //$("#table-background").removeClass("opacity");
    }
    if($("#eventMenu").hasClass("hide") === false){
-      $("#eventMenu").addClass("hide");
+      $("#eventMenu").fadeOut(400, function(){$("#eventMenu").addClass("hide")});
+      //$("#eventMenu").addClass("hide");
       $("#calendar").removeClass("disable");
-      $("#table-background").removeClass("opacity");
+      //$("#table-background").removeClass("opacity");
    }
    if(document.querySelector(".deleteButton") !== null){
       let idString;
@@ -170,9 +174,9 @@ $("#table-background").click(function(){
                }
             })
          })
-         $("#eventMenu").removeClass("hide");
+         $("#eventMenu").fadeIn(400, function(){$("#eventMenu").removeClass("hide");});
+         $("#table-background").animate({"opacity": "0.4"});
          $("#calendar").addClass("disable");
-         $("#table-background").addClass("opacity");
       })
    }
 });
@@ -235,9 +239,8 @@ $("#saveEventBtn").on("click", function(){
          }
       }
    });
-   $("#eventMenu").addClass("hide");
+   $("#eventMenu").fadeOut(400, function(){$("#eventMenu").addClass("hide");});
    $("#calendar").removeClass("disable");
-   $("#table-background").removeClass("opacity");
 });
 
 $(".colorBtn").click(function(e){
@@ -250,8 +253,7 @@ $(".colorBtn").click(function(e){
 })
 
 $("#calendar").click(function(e){
-   $("#table-background").addClass("disable");
-   $("#table-background").animate({"opacity": "-=0.4"});
+   $("#table-background").animate({"opacity": "0.4"});
    createRightDrawer(e.target.getAttribute("data-date").split("/"));
    let drawerWidth = $("#rightDrawer").width();
    $("#rightDrawer").animate({"right": 0,}, "450");
@@ -260,6 +262,5 @@ $("#calendar").click(function(e){
 $("#deleteWindow").click(function(){
    let drawerWidth = $("#rightDrawer").width();
    $("#rightDrawer").animate({"right": "-30%"}, "450");
-   $("#table-background").removeClass("disable");
-   $("#table-background").animate({"opacity": "+=0.4"});
+   $("#table-background").animate({"opacity": "1"});
 });
