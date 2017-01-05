@@ -9,15 +9,15 @@ function createRightDrawer(dateArray){
    $.each(eventMap, function(dateKey, eventList){
       if(dateKey == localeFormat.format(selectedDay)){
          $.each(eventList, function(i, eventObj){
-            let eventDiv = "<div id=e" +  eventObj.eventID +">";
+            let eventDiv = "<div class='eventDiv' id=e" +  eventObj.eventID +">";
             let eventName = "<h4 class=text-center>" + eventObj.title + "</h4>";
             let eventTime = "<p class='text-center'>" + formatEventTime(eventObj.stime) + " - " + formatEventTime(eventObj.etime) + "</p>";
             eventDiv += eventName;
             eventDiv += eventTime;
-            let delBtn = "<button class='deleteButton' data-eId=" + eventObj.eventID + ">Delete</button>";
+            let delBtn = "<button class='deleteButton' data-eId=" + eventObj.eventID + ">X</button>";
             let updateBtn = "<button class='updateButton' data-eId=" + eventObj.eventID + ">Edit</button>";
-            eventDiv += delBtn;
             eventDiv += updateBtn;
+            eventDiv += delBtn;
             eventDiv += "</div>";
             $("#drawerEvents").append(eventDiv);
             $("#e"+eventObj.eventID).css("background-color", eventObj.color);
@@ -140,7 +140,7 @@ $("#table-background").click(function(){
                      success: function(data){
                         eventList.splice(eIndex, 1);
                         idString = "#e"+eventObj.eventID;
-                        $(idString).remove();
+                        $(idString).slideUp("slow", function() { $(idString).remove();});
                         if(eventList.length == 0){
                            $("[data-date='" + dateKey + "']").css("background-color", "white");
                            $("[data-date='" + dateKey + "']").text("");
