@@ -144,7 +144,8 @@ $("#table-background").click(function(){
                      success: function(data){
                         eventList.splice(eIndex, 1);
                         idString = "#e"+eventObj.eventID;
-                        $(idString).slideUp("slow", function() { $(idString).remove();});
+                        //$(idString).slideUp("slow", );
+                        $(idString).animate({"right": "-90%"}, "fast", function() { $(idString).remove()});
                         if(eventList.length == 0){
                            $("[data-date='" + dateKey + "']").css("background-color", "white");
                            $("[data-date='" + dateKey + "']").text("");
